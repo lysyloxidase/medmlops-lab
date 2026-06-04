@@ -26,3 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 5 Evidently drift reports/test suites, transparent PSI/KS/Wasserstein/MMD
   metrics with persisted alerts, synthetic three-regime drift simulation, and
   retrospective delayed-label performance monitoring.
+- Phase 6 Fairlearn subgroup discrimination/calibration audit with audit-only
+  protected attributes, a fairness regression gate, and generated Model Card,
+  Datasheet, TRIPOD+AI, PROBAST+AI, FDA GMLP, and EU AI Act governance framing.

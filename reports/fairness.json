@@ -1,0 +1,302 @@
+{
+  "audit_scope": {
+    "sensitive_features_audit_only": [
+      "race",
+      "gender",
+      "age"
+    ],
+    "sensitive_features_used_as_predictors": false,
+    "threshold": 0.5
+  },
+  "overall": {
+    "n": 20354,
+    "prevalence": 0.11157512036946055,
+    "auroc": 0.680727168497198,
+    "auprc": 0.2195125317588825,
+    "brier": 0.09404654301139381,
+    "ece": 0.0038682658578439682,
+    "slope": 0.9811621365408038,
+    "intercept": -0.037101433632237835
+  },
+  "features": {
+    "race": {
+      "fairlearn_disparities": {
+        "demographic_parity_difference": 0.005173305742369374,
+        "demographic_parity_ratio": 0.0,
+        "equalized_odds_difference": 0.04,
+        "equal_opportunity_difference": 0.04
+      },
+      "subgroup_auroc_gap": 0.1570763672700719,
+      "subgroup_auprc_gap": 0.25714119999652607,
+      "calibration_ece_gap": 0.023574109283502634,
+      "groups": {
+        "?": {
+          "n": 462,
+          "prevalence": 0.09090909090909091,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": 0.6041383219954648,
+          "auprc": 0.15299876092465586,
+          "brier": 0.08138279040123675,
+          "ece": 0.016287027973504287,
+          "slope": 0.6921017832999324,
+          "intercept": -0.6728700334249184
+        },
+        "AfricanAmerican": {
+          "n": 3866,
+          "prevalence": 0.11174340403517848,
+          "selection_rate": 0.005173305742369374,
+          "true_positive_rate": 0.020833333333333332,
+          "false_positive_rate": 0.00320326150262085,
+          "auroc": 0.6670532555706551,
+          "auprc": 0.2055952172998575,
+          "brier": 0.09508773943406276,
+          "ece": 0.009636165624331242,
+          "slope": 0.8845675473403496,
+          "intercept": -0.22093050418232885
+        },
+        "Asian": {
+          "n": 123,
+          "prevalence": 0.08130081300813008,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": 0.6163716814159292,
+          "auprc": 0.10745829649277926,
+          "brier": 0.07656409856919107,
+          "ece": 0.019950766901580996,
+          "slope": 0.5111697529407823,
+          "intercept": -1.2785863909444761
+        },
+        "Caucasian": {
+          "n": 15223,
+          "prevalence": 0.11278985745253892,
+          "selection_rate": 0.00440123497339552,
+          "true_positive_rate": 0.017472335468841003,
+          "false_positive_rate": 0.0027395231748852363,
+          "auroc": 0.6839993717928252,
+          "auprc": 0.22492651243649348,
+          "brier": 0.09472527132132265,
+          "ece": 0.005967003134873688,
+          "slope": 0.9994301768177996,
+          "intercept": -0.0009471755164628358
+        },
+        "Hispanic": {
+          "n": 404,
+          "prevalence": 0.12376237623762376,
+          "selection_rate": 0.0049504950495049506,
+          "true_positive_rate": 0.04,
+          "false_positive_rate": 0.0,
+          "auroc": 0.7612146892655367,
+          "auprc": 0.36459949648930534,
+          "brier": 0.09696835356099788,
+          "ece": 0.02954111241837632,
+          "slope": 1.4899616574765566,
+          "intercept": 1.1524115065218448
+        },
+        "Other": {
+          "n": 276,
+          "prevalence": 0.07246376811594203,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": 0.67333984375,
+          "auprc": 0.12717370134360426,
+          "brier": 0.06673870416414275,
+          "ece": 0.027324676675782516,
+          "slope": 0.9859776378396597,
+          "intercept": -0.38895794515085536
+        }
+      }
+    },
+    "gender": {
+      "fairlearn_disparities": {
+        "demographic_parity_difference": 0.0008365131810138728,
+        "demographic_parity_ratio": 0.8242678848193165,
+        "equalized_odds_difference": 0.004172287229036609,
+        "equal_opportunity_difference": 0.004172287229036609
+      },
+      "subgroup_auroc_gap": 0.007397917472156235,
+      "subgroup_auprc_gap": 0.013587107404677445,
+      "calibration_ece_gap": 0.0012085337297361174,
+      "groups": {
+        "Female": {
+          "n": 10924,
+          "prevalence": 0.1148846576345661,
+          "selection_rate": 0.004760161113145368,
+          "true_positive_rate": 0.0199203187250996,
+          "false_positive_rate": 0.0027924294135898233,
+          "auroc": 0.6773364912467207,
+          "auprc": 0.2257777563441546,
+          "brier": 0.09639360361766294,
+          "ece": 0.0033083526677382506,
+          "slope": 0.9300702255949579,
+          "intercept": -0.11393593371936124
+        },
+        "Male": {
+          "n": 9430,
+          "prevalence": 0.10774125132555673,
+          "selection_rate": 0.003923647932131495,
+          "true_positive_rate": 0.015748031496062992,
+          "false_positive_rate": 0.0024958402662229617,
+          "auroc": 0.6847344087188769,
+          "auprc": 0.21219064893947714,
+          "brier": 0.09132763632391937,
+          "ece": 0.004516886397474368,
+          "slope": 1.0428107924057681,
+          "intercept": 0.05707755547360277
+        }
+      }
+    },
+    "age": {
+      "fairlearn_disparities": {
+        "demographic_parity_difference": 0.04938271604938271,
+        "demographic_parity_ratio": 0.0,
+        "equalized_odds_difference": 0.23255813953488372,
+        "equal_opportunity_difference": 0.23255813953488372
+      },
+      "subgroup_auroc_gap": 0.24078395357418958,
+      "subgroup_auprc_gap": 0.31797894019397954,
+      "calibration_ece_gap": 0.03343860360596816,
+      "groups": {
+        "[0-10)": {
+          "n": 34,
+          "prevalence": 0.0,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": null,
+          "auprc": null,
+          "brier": 0.0017371904804775182,
+          "ece": 0.03126404912743378,
+          "slope": null,
+          "intercept": null
+        },
+        "[10-20)": {
+          "n": 130,
+          "prevalence": 0.046153846153846156,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": 0.7970430107526881,
+          "auprc": 0.1522517534145441,
+          "brier": 0.04338637264332973,
+          "ece": 0.03326057449693138,
+          "slope": 1.1316662329377067,
+          "intercept": -0.023312950374705196
+        },
+        "[20-30)": {
+          "n": 324,
+          "prevalence": 0.13271604938271606,
+          "selection_rate": 0.04938271604938271,
+          "true_positive_rate": 0.23255813953488372,
+          "false_positive_rate": 0.021352313167259787,
+          "auroc": 0.8349747579243565,
+          "auprc": 0.47023069360852365,
+          "brier": 0.09030816440115963,
+          "ece": 0.040212742468497056,
+          "slope": 0.8520965928844482,
+          "intercept": -0.15953215232828258
+        },
+        "[30-40)": {
+          "n": 725,
+          "prevalence": 0.10758620689655173,
+          "selection_rate": 0.011034482758620689,
+          "true_positive_rate": 0.02564102564102564,
+          "false_positive_rate": 0.00927357032457496,
+          "auroc": 0.7142036222407164,
+          "auprc": 0.23149428754285528,
+          "brier": 0.09064727094393936,
+          "ece": 0.013802849014905397,
+          "slope": 0.9491746512244454,
+          "intercept": -0.050391091380047916
+        },
+        "[40-50)": {
+          "n": 1913,
+          "prevalence": 0.0982749607945635,
+          "selection_rate": 0.006795608991113434,
+          "true_positive_rate": 0.03723404255319149,
+          "false_positive_rate": 0.0034782608695652175,
+          "auroc": 0.7291951896392228,
+          "auprc": 0.2323706012626553,
+          "brier": 0.08230197931536815,
+          "ece": 0.01772968296428049,
+          "slope": 1.1061678998098834,
+          "intercept": 0.10813770232797927
+        },
+        "[50-60)": {
+          "n": 3457,
+          "prevalence": 0.08706971362452993,
+          "selection_rate": 0.006653167486259763,
+          "true_positive_rate": 0.036544850498338874,
+          "false_positive_rate": 0.0038022813688212928,
+          "auroc": 0.7034936354946966,
+          "auprc": 0.22241274475624048,
+          "brier": 0.0744001059177062,
+          "ece": 0.02335494898923271,
+          "slope": 1.113860039947748,
+          "intercept": -0.04559083878252165
+        },
+        "[60-70)": {
+          "n": 4547,
+          "prevalence": 0.11634044424895536,
+          "selection_rate": 0.003298878381350341,
+          "true_positive_rate": 0.007561436672967864,
+          "false_positive_rate": 0.0027376804380288703,
+          "auroc": 0.6632561319054802,
+          "auprc": 0.2101034606841509,
+          "brier": 0.09858858357330895,
+          "ece": 0.007372416599729765,
+          "slope": 0.9256458806396056,
+          "intercept": -0.08634573239289463
+        },
+        "[70-80)": {
+          "n": 5234,
+          "prevalence": 0.1199847153228888,
+          "selection_rate": 0.002483760030569354,
+          "true_positive_rate": 0.011146496815286623,
+          "false_positive_rate": 0.0013026487190620929,
+          "auroc": 0.6635624469329675,
+          "auprc": 0.21511351477350898,
+          "brier": 0.10114866768419317,
+          "ece": 0.006774138862528898,
+          "slope": 0.9164462075093813,
+          "intercept": -0.10774165760852294
+        },
+        "[80-90)": {
+          "n": 3414,
+          "prevalence": 0.12419449326303457,
+          "selection_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0,
+          "auroc": 0.6448132927367956,
+          "auprc": 0.2132591074437113,
+          "brier": 0.10475146398940875,
+          "ece": 0.008260459507907304,
+          "slope": 0.9880229586437589,
+          "intercept": 0.05352223053299336
+        },
+        "[90-100)": {
+          "n": 576,
+          "prevalence": 0.1284722222222222,
+          "selection_rate": 0.001736111111111111,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.00199203187250996,
+          "auroc": 0.5941908043501669,
+          "auprc": 0.18486555308403743,
+          "brier": 0.11038916669974808,
+          "ece": 0.012969795626167773,
+          "slope": 0.5990717574471244,
+          "intercept": -0.6659990121500795
+        }
+      }
+    }
+  },
+  "impossibility_tradeoff": "When outcome base rates differ across groups, a calibrated score generally cannot also satisfy equalized odds except in special cases. This audit exposes the trade-off; it does not claim that the model is fully fair.",
+  "egfr_race_lesson": "Race is a social and political construct, not a biological correction factor. The removal of race coefficients from eGFR equations is a cautionary lesson: race is retained here only to audit inequity and is never used as a predictor.",
+  "provenance": {
+    "model_sha256": "f435c7642ed08020e25f19339199152d313ccd13083f7fb2695cff0001aaa24f",
+    "test_data_sha256": "733b912434c9be8ba446d30b8ef1efeb6f20449dee0bd69e61c01c10c03860f2"
+  }
+}

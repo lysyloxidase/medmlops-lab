@@ -29,3 +29,10 @@ Project caveats:
 18. Future monitoring requires production-like data.
 19. Any real-world use would require independent clinical, legal, security, and
     regulatory review.
+20. Fairness definitions can conflict. With unequal outcome base rates,
+    calibration and equalized odds generally cannot both hold; subgroup metrics
+    are diagnostics, not proof that a model is fair.
+21. Race is a social and political construct, not a biological correction
+    factor. Its presence in this project is limited to auditing inequity.
+22. FDA GMLP, EU AI Act, TRIPOD+AI, and PROBAST+AI mappings are aspirational
+    self-assessments, not certification, approval, or legal advice.

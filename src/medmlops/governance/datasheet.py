@@ -1,4 +1,19 @@
-# Datasheet: Diabetes 130-US Hospitals
+"""Generate the Diabetes 130 data datasheet."""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+from medmlops.governance.common import nested, write_markdown
+
+
+def render_datasheet(evidence: dict[str, dict[str, Any]]) -> str:
+    """Render a compact Datasheets-for-Datasets style document."""
+
+    quality = evidence["data_quality"]
+    train = evidence["train_metrics"]
+    return f"""# Datasheet: Diabetes 130-US Hospitals
 
 > **Research and portfolio demonstration only.** This datasheet is an
 > aspirational governance artifact, not a certification of dataset fitness.
@@ -12,8 +27,8 @@ the operational safeguards around such models.
 
 - Source: UCI Machine Learning Repository, Diabetes 130-US Hospitals (1999-2008).
 - License: CC BY 4.0.
-- Rows validated: `101766`
-- Positive rate: `0.11159915885462728`
+- Rows validated: `{nested(quality, "row_count")}`
+- Positive rate: `{nested(quality, "positive_rate_30d")}`
 - Unit of observation: hospital encounter; repeated patients may exist.
 - Target: whether readmission occurred within 30 days.
 
@@ -23,8 +38,8 @@ The source contains encounter records from 130 US hospitals and integrated
 delivery networks from 1999-2008. Source hashes and validation evidence are
 tracked in DVC and `reports/data_quality.json`.
 
-- Validated source hash: `6050dc10d1942436bcb27cb2df75fc7cddbbf06efb66d21250aee8ba30d14974`
-- Training source hash: `16cb642ee7599884409bf54eeb0db4bdfa468c1e8782cb6fe65f5e6f97b56ef1`
+- Validated source hash: `{nested(quality, "source_sha256")}`
+- Training source hash: `{nested(train, "source_train_sha256")}`
 
 ## Preprocessing
 
@@ -51,3 +66,13 @@ Subgroup audits are necessary but cannot prove fairness.
 The static source is versioned through DVC. Any replacement or refresh requires
 new validation, calibration, fairness auditing, drift baselines, and governance
 regeneration.
+"""
+
+
+def generate_datasheet(
+    evidence: dict[str, dict[str, Any]],
+    output_path: str | Path = "docs/datasheet.md",
+) -> Path:
+    """Write the dataset datasheet."""
+
+    return write_markdown(output_path, render_datasheet(evidence))

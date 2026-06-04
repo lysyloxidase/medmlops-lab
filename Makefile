@@ -1,4 +1,4 @@
-.PHONY: setup data train clinical monitor serve evidently-ui reproduce test lint format clean
+.PHONY: setup data train clinical monitor responsible-ai serve evidently-ui reproduce test lint format clean
 
 setup:
 	uv sync --all-groups
@@ -21,6 +21,9 @@ monitor:
 	uv run dvc repro drift_baseline
 	uv run medmlops simulate-drift
 	uv run medmlops monitor-performance
+
+responsible-ai:
+	uv run dvc repro fairness_audit governance
 
 serve:
 	uv run uvicorn medmlops.serving.app:app --host 0.0.0.0 --port 8000

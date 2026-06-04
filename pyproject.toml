@@ -8,6 +8,7 @@ license = { text = "Apache-2.0" }
 authors = [{ name = "MedMLOps-Lab contributors" }]
 dependencies = [
     "evidently==0.7.21",
+    "fairlearn==0.13.0",
     "fastapi>=0.111.0",
     "httpx>=0.27.0",
     "joblib>=1.4.2",

@@ -428,6 +428,62 @@ def monitor_performance(
     console.print(f"Wrote delayed-label performance report: {destination}")
 
 
+@app.command("fairness-audit")
+def fairness_audit(
+    model_path: Annotated[
+        Path,
+        typer.Option("--model-path", help="Conformal model artifact."),
+    ] = Path("models/conformal.pkl"),
+    test_path: Annotated[
+        Path,
+        typer.Option("--test-path", help="Held-out test split parquet path."),
+    ] = Path("data/processed/test.parquet"),
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Fairness audit JSON path."),
+    ] = Path("reports/fairness.json"),
+    figure_path: Annotated[
+        Path,
+        typer.Option("--figure-path", help="Subgroup AUROC figure path."),
+    ] = Path("reports/figures/subgroup_auroc.png"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Audit protected attributes without using them as predictors."""
+
+    from medmlops.fairness.audit import fairness_audit_phase6
+
+    destination = fairness_audit_phase6(
+        model_path=model_path,
+        test_path=test_path,
+        report_path=report_path,
+        figure_path=figure_path,
+        params_path=params_path,
+    )
+    console.print(f"Wrote fairness audit: {destination}")
+
+
+@app.command()
+def governance(
+    report_dir: Annotated[
+        Path,
+        typer.Option("--report-dir", help="Pipeline evidence report directory."),
+    ] = Path("reports"),
+    docs_dir: Annotated[
+        Path,
+        typer.Option("--docs-dir", help="Generated governance document directory."),
+    ] = Path("docs"),
+) -> None:
+    """Generate evidence-linked responsible-AI governance documents."""
+
+    from medmlops.governance.generate import generate_governance_docs
+
+    for name, destination in generate_governance_docs(report_dir, docs_dir).items():
+        console.print(f"Wrote {name}: {destination}")
+
+
 @app.command()
 def version() -> None:
     """Print package version."""

@@ -128,3 +128,16 @@ monitoring:
   clinical_threshold: 0.10
   drift_feature: num_medications
   workspace_path: reports/evidently-workspace
+fairness:
+  sensitive_features:
+    - race
+    - gender
+    - age
+  threshold: 0.5
+  max_subgroup_auroc_gap: 0.10
+governance:
+  regulatory_framing:
+    - FDA-GMLP
+    - EU-AI-Act
+    - TRIPOD+AI
+    - PROBAST+AI

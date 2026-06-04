@@ -74,6 +74,11 @@ PSI/KS/Wasserstein/MMD checks, a clearly labeled synthetic three-regime drift
 demo, and retrospective delayed-label performance monitoring from the prediction
 audit log.
 
+Phase 6 audits race, gender, and age as audit-only attributes with Fairlearn,
+including subgroup discrimination and calibration, then generates an
+evidence-linked Model Card, Datasheet, TRIPOD+AI checklist, PROBAST+AI
+self-assessment, and cautious FDA GMLP / EU AI Act framing.
+
 ## Phase 2 Training
 
 Every training run fits both models:
@@ -122,6 +127,16 @@ The local Evidently workspace UI runs on `http://localhost:8001`. Synthetic
 drift outputs are demonstrations only; delayed-label performance reports are
 retrospective and reflect only the labeled subset.
 
+## Phase 6 Responsible AI And Governance
+
+```bash
+make responsible-ai
+```
+
+The fairness audit never adds sensitive attributes to the predictor matrix.
+Governance mappings are aspirational self-assessments, not regulatory
+certification or evidence of clinical fitness.
+
 ## Dataset
 
 Default source: Diabetes 130-US Hospitals for Years 1999-2008, UCI Machine
@@ -143,5 +158,6 @@ make test        # run unit tests
 make train       # train baseline + hero and log MLflow provenance
 make clinical    # calibrate, conformalize, and evaluate clinical metrics
 make monitor     # build drift baseline, simulate drift, monitor delayed labels
+make responsible-ai # run fairness audit and generate governance documents
 make serve       # run the FastAPI serving layer on http://localhost:8000
 ```

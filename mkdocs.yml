@@ -22,4 +22,6 @@ nav:
   - Model Card: model-card.md
   - Datasheet: datasheet.md
   - TRIPOD-AI: tripod-ai.md
+  - PROBAST-AI: probast-ai.md
+  - Regulatory Framing: regulatory-framing.md
   - Caveats: caveats.md

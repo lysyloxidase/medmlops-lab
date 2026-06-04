@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/medmlops/cli.py
       hash: md5
-      md5: 3efbb3305c5503ba05c593595fd5d67f
-      size: 14183
+      md5: 03f7a26c9870d2c6b8136e08f68887f9
+      size: 16040
     - path: src/medmlops/data/ingest.py
       hash: md5
       md5: 41e2a23e7ad9eaa1295dc5fb93538ed6
@@ -29,8 +29,8 @@ stages:
       size: 2758259
     - path: src/medmlops/cli.py
       hash: md5
-      md5: 3efbb3305c5503ba05c593595fd5d67f
-      size: 14183
+      md5: 03f7a26c9870d2c6b8136e08f68887f9
+      size: 16040
     - path: src/medmlops/data/contracts.py
       hash: md5
       md5: 58d1abb709590afd3ccc68a60ca5b9f1
@@ -57,8 +57,8 @@ stages:
       size: 2773444
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/data/ids_mapping.py
       hash: md5
       md5: 13af79836d2b751b409e6f0c1b465b2f
@@ -81,8 +81,8 @@ stages:
       size: 1219868
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/features/pipeline.py
       hash: md5
       md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
@@ -132,8 +132,8 @@ stages:
       size: 148505
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/features/pipeline.py
       hash: md5
       md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
@@ -156,8 +156,8 @@ stages:
       size: 13081
     - path: uv.lock
       hash: md5
-      md5: 6e4694bc04c093469931a621cb18f930
-      size: 748276
+      md5: ac49e48692e57d2b07a3b321bbf602e6
+      size: 748682
     params:
       params.yaml:
         model:
@@ -215,8 +215,8 @@ stages:
       size: 473543
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -238,7 +238,7 @@ stages:
     outs:
     - path: models/calibrated.pkl
       hash: md5
-      md5: 3e4dfa57cdc6579638b264c9b351d3f7
+      md5: 1fc7c8be6d4451ff1849106891c150c3
       size: 417643
     - path: reports/calibration_metrics.json
       hash: md5
@@ -261,12 +261,12 @@ stages:
       size: 269572
     - path: models/calibrated.pkl
       hash: md5
-      md5: 3e4dfa57cdc6579638b264c9b351d3f7
+      md5: 1fc7c8be6d4451ff1849106891c150c3
       size: 417643
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -285,8 +285,8 @@ stages:
     outs:
     - path: models/conformal.pkl
       hash: md5
-      md5: fcdb62ac6f34448b8c4d556158981f13
-      size: 432716
+      md5: 0b1d56cc68d0137f75d04282b9ca56ef
+      size: 432715
     - path: reports/conformal_metrics.json
       hash: md5
       md5: 0b591a07190b028f7d10edcef226a586
@@ -300,12 +300,12 @@ stages:
       size: 269572
     - path: models/conformal.pkl
       hash: md5
-      md5: fcdb62ac6f34448b8c4d556158981f13
-      size: 432716
+      md5: 0b1d56cc68d0137f75d04282b9ca56ef
+      size: 432715
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -340,12 +340,12 @@ stages:
       size: 626444
     - path: params.yaml
       hash: md5
-      md5: 84f8956d94595235c375cc44ccf29cd5
-      size: 2633
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
     - path: src/medmlops/cli.py
       hash: md5
-      md5: 3efbb3305c5503ba05c593595fd5d67f
-      size: 14183
+      md5: 03f7a26c9870d2c6b8136e08f68887f9
+      size: 16040
     - path: src/medmlops/features/pipeline.py
       hash: md5
       md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
@@ -420,3 +420,121 @@ stages:
       hash: md5
       md5: 4ff0a7116bd1fbf0496c20444ca22ad8
       size: 604769
+  fairness_audit:
+    cmd: python -m medmlops.cli fairness-audit
+    deps:
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: dffb77c214302024530118afdc8bfde7
+      size: 269572
+    - path: models/conformal.pkl
+      hash: md5
+      md5: 0b1d56cc68d0137f75d04282b9ca56ef
+      size: 432715
+    - path: params.yaml
+      hash: md5
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
+    - path: src/medmlops/calibration/calibrate.py
+      hash: md5
+      md5: e2855f8da8b6bf12df8107ef68063bdd
+      size: 13520
+    - path: src/medmlops/cli.py
+      hash: md5
+      md5: 03f7a26c9870d2c6b8136e08f68887f9
+      size: 16040
+    - path: src/medmlops/conformal/conformal.py
+      hash: md5
+      md5: c4525f3c5940f838d076561b23858cd0
+      size: 8833
+    - path: src/medmlops/fairness/
+      hash: md5
+      md5: 569745940bd2ae65686078b6143ccefc.dir
+      size: 14376
+      nfiles: 3
+    - path: src/medmlops/features/pipeline.py
+      hash: md5
+      md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
+      size: 10147
+    params:
+      params.yaml:
+        fairness:
+          sensitive_features:
+          - race
+          - gender
+          - age
+          threshold: 0.5
+          max_subgroup_auroc_gap: 0.1
+        features.audit_only:
+        - race
+        - gender
+        - age
+    outs:
+    - path: reports/fairness.json
+      hash: md5
+      md5: cd05606f3c7a1fc375da22ee75337dd6
+      size: 11060
+    - path: reports/figures/subgroup_auroc.png
+      hash: md5
+      md5: 7e94ece18ee49cea38465edf9dc3cf59
+      size: 71039
+  governance:
+    cmd: python -m medmlops.cli governance
+    deps:
+    - path: DISCLAIMER.md
+      hash: md5
+      md5: a90c9bab0cba47797defbad1fd4e4271
+      size: 719
+    - path: configs/data/diabetes130.yaml
+      hash: md5
+      md5: 76ff954e5b9f7b14a99ed974bd17ca48
+      size: 404
+    - path: params.yaml
+      hash: md5
+      md5: 8efccc6055c5c734243a6cbb58a9b98a
+      size: 2845
+    - path: reports/calibration_metrics.json
+      hash: md5
+      md5: 227afbf7aebc5c834623110b35d73430
+      size: 865
+    - path: reports/clinical_metrics.json
+      hash: md5
+      md5: 3969ab1041bde2ee7012faac5364c793
+      size: 1757
+    - path: reports/conformal_metrics.json
+      hash: md5
+      md5: 0b591a07190b028f7d10edcef226a586
+      size: 401
+    - path: reports/data_quality.json
+      hash: md5
+      md5: d838d070ad3775e6d76c18461f31b7a9
+      size: 1225
+    - path: reports/fairness.json
+      hash: md5
+      md5: cd05606f3c7a1fc375da22ee75337dd6
+      size: 11060
+    - path: reports/train_metrics.json
+      hash: md5
+      md5: e4777cd9c756d383dedeac4ac3c515cd
+      size: 2476
+    - path: src/medmlops/cli.py
+      hash: md5
+      md5: 03f7a26c9870d2c6b8136e08f68887f9
+      size: 16040
+    - path: src/medmlops/governance/
+      hash: md5
+      md5: aaf9829f8509c01d264746e4ec08478e.dir
+      size: 21124
+      nfiles: 8
+    - path: uv.lock
+      hash: md5
+      md5: ac49e48692e57d2b07a3b321bbf602e6
+      size: 748682
+    params:
+      params.yaml:
+        governance:
+          regulatory_framing:
+          - FDA-GMLP
+          - EU-AI-Act
+          - TRIPOD+AI
+          - PROBAST+AI

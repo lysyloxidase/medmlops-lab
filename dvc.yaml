@@ -133,3 +133,39 @@ stages:
       - monitoring.evidently_version_pin
     outs:
       - reports/drift/reference_snapshot.parquet
+  fairness_audit:
+    cmd: python -m medmlops.cli fairness-audit
+    deps:
+      - src/medmlops/fairness/
+      - src/medmlops/calibration/calibrate.py
+      - src/medmlops/conformal/conformal.py
+      - src/medmlops/features/pipeline.py
+      - src/medmlops/cli.py
+      - models/conformal.pkl
+      - data/processed/test.parquet
+      - params.yaml
+    params:
+      - fairness
+      - features.audit_only
+    metrics:
+      - reports/fairness.json:
+          cache: false
+    plots:
+      - reports/figures/subgroup_auroc.png
+  governance:
+    cmd: python -m medmlops.cli governance
+    deps:
+      - src/medmlops/governance/
+      - src/medmlops/cli.py
+      - reports/data_quality.json
+      - reports/train_metrics.json
+      - reports/calibration_metrics.json
+      - reports/conformal_metrics.json
+      - reports/clinical_metrics.json
+      - reports/fairness.json
+      - params.yaml
+      - uv.lock
+      - configs/data/diabetes130.yaml
+      - DISCLAIMER.md
+    params:
+      - governance
