@@ -1,0 +1,17 @@
+project:
+  name: medmlops-lab
+  environment: local
+  seed: 42
+
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_processed: data/processed
+  reports: reports
+
+data:
+  config: configs/data/diabetes130.yaml
+
+logging:
+  level: INFO
+  json: false

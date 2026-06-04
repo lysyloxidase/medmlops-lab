@@ -1,0 +1,71 @@
+stages:
+  ingest:
+    cmd: python -m medmlops.cli ingest
+    deps:
+      - src/medmlops/data/ingest.py
+      - src/medmlops/cli.py
+    outs:
+      - data/raw/diabetes130.parquet
+      - data/raw/diabetes130.sha256:
+          cache: false
+  validate:
+    cmd: python -m medmlops.cli validate
+    deps:
+      - src/medmlops/data/contracts.py
+      - src/medmlops/data/validate.py
+      - src/medmlops/cli.py
+      - data/raw/diabetes130.parquet
+    outs:
+      - data/interim/validated.parquet
+    metrics:
+      - reports/data_quality.json:
+          cache: false
+  preprocess:
+    cmd: python -m medmlops.cli preprocess
+    deps:
+      - src/medmlops/features/pipeline.py
+      - src/medmlops/data/ids_mapping.py
+      - data/interim/validated.parquet
+      - params.yaml
+    outs:
+      - data/processed/features.parquet
+  split:
+    cmd: python -m medmlops.cli split
+    deps:
+      - src/medmlops/features/pipeline.py
+      - data/processed/features.parquet
+      - params.yaml
+    params:
+      - data.validation_size
+      - data.test_size
+      - data.calibration_size
+      - data.conformal_size
+      - seed
+    outs:
+      - data/processed/train.parquet
+      - data/processed/val.parquet
+      - data/processed/calib.parquet
+      - data/processed/conformal.parquet
+      - data/processed/test.parquet
+  train:
+    cmd: python -m medmlops.cli train
+    deps:
+      - src/medmlops/features/pipeline.py
+      - src/medmlops/models/baseline.py
+      - src/medmlops/models/tabular_mlp.py
+      - src/medmlops/models/tracking.py
+      - src/medmlops/models/train.py
+      - data/processed/train.parquet
+      - data/processed/val.parquet
+      - data/processed/test.parquet
+      - params.yaml
+      - uv.lock
+    params:
+      - model
+      - seed
+    outs:
+      - models/hero.pt
+      - models/baseline.pkl
+    metrics:
+      - reports/train_metrics.json:
+          cache: false

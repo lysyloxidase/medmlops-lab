@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+.env
+.env.*
+!.env.example
+
+# Build outputs
+build/
+dist/
+site/
+
+# Local notebooks and stripped notebook checkpoints
+.ipynb_checkpoints/
+
+# DVC/local data and caches
+/data/raw/*
+!/data/raw/.gitkeep
+/data/interim/*
+!/data/interim/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/reports/*
+!/reports/.gitkeep
+!/reports/*.json
+/models/*
+!/models/.gitkeep
+/mlruns/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/

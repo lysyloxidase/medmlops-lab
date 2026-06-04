@@ -1,0 +1,7 @@
+name: nhanes
+status: backup_adapter
+license: public_domain_us_government
+source: https://www.cdc.gov/nchs/nhanes/
+notes: >
+  Backup tabular-health adapter placeholder. Phase 1 keeps this config so the
+  platform boundary is explicit, but no NHANES data is downloaded by default.

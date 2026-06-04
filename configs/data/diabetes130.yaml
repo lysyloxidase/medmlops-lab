@@ -1,0 +1,15 @@
+name: diabetes130
+uci_id: 296
+doi: 10.24432/C5230J
+article_doi: 10.1155/2014/781670
+license: CC BY 4.0
+citation: Strack et al., BioMed Research International 2014
+target_col: readmitted
+positive_class: "<30"
+raw_path: data/raw/diabetes130.parquet
+validated_path: data/interim/validated.parquet
+metrics_path: reports/data_quality.json
+expected_rows: 101766
+expected_positive_rate:
+  min: 0.08
+  max: 0.14

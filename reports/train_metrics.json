@@ -1,0 +1,91 @@
+{
+  "baseline": {
+    "backend": "sklearn_hist_gradient_boosting",
+    "subgroup_test_auroc": {
+      "age=[10-20)": 0.7701612903,
+      "age=[20-30)": 0.8272779939,
+      "age=[30-40)": 0.7042167004,
+      "age=[40-50)": 0.7332300339,
+      "age=[50-60)": 0.6944790074,
+      "age=[60-70)": 0.6417058962,
+      "age=[70-80)": 0.650280996,
+      "age=[80-90)": 0.633600997,
+      "age=[90-100)": 0.6003822548,
+      "gender=Female": 0.6746003884,
+      "gender=Male": 0.6639634636,
+      "race=?": 0.6579365079,
+      "race=AfricanAmerican": 0.656033281,
+      "race=Asian": 0.5398230088,
+      "race=Caucasian": 0.6707675426,
+      "race=Hispanic": 0.7723163842,
+      "race=Other": 0.7208984375
+    },
+    "test": {
+      "auprc": 0.2181731562,
+      "auroc": 0.6699043427,
+      "brier": 0.2288988561,
+      "ece": 0.3612766406
+    },
+    "validation": {
+      "auprc": 0.2172527887,
+      "auroc": 0.660674338,
+      "brier": 0.2298404721,
+      "ece": 0.3618231167
+    }
+  },
+  "beat_baseline_delta_auroc": 0.0014360441,
+  "champion": "hero",
+  "class_imbalance": {
+    "class_weighted_loss": true,
+    "positive_rate_test": 0.1115751204,
+    "positive_rate_train": 0.1115937187,
+    "positive_rate_validation": 0.1116242508
+  },
+  "features": {
+    "audit_only_excluded": [
+      "race",
+      "gender",
+      "age"
+    ],
+    "n_raw_model_features": 44,
+    "n_transformed_features": 262
+  },
+  "flavors_logged": [
+    "pytorch",
+    "sklearn"
+  ],
+  "hero": {
+    "subgroup_test_auroc": {
+      "age=[10-20)": 0.811827957,
+      "age=[20-30)": 0.834064388,
+      "age=[30-40)": 0.7198113581,
+      "age=[40-50)": 0.7302991058,
+      "age=[50-60)": 0.7026925458,
+      "age=[60-70)": 0.6640477022,
+      "age=[70-80)": 0.6639985646,
+      "age=[80-90)": 0.6460528807,
+      "age=[90-100)": 0.5966943039,
+      "gender=Female": 0.6785422587,
+      "gender=Male": 0.6851858849,
+      "race=?": 0.6010204082,
+      "race=AfricanAmerican": 0.6670138215,
+      "race=Asian": 0.6123893805,
+      "race=Caucasian": 0.6850895924,
+      "race=Hispanic": 0.7636158192,
+      "race=Other": 0.6771484375
+    },
+    "test": {
+      "auprc": 0.22916623,
+      "auroc": 0.6815950902,
+      "brier": 0.2115655255,
+      "ece": 0.3218010419
+    },
+    "validation": {
+      "auprc": 0.2299370367,
+      "auroc": 0.6621103821,
+      "brier": 0.2135219727,
+      "ece": 0.3214680152
+    }
+  },
+  "source_train_sha256": "16cb642ee7599884409bf54eeb0db4bdfa468c1e8782cb6fe65f5e6f97b56ef1"
+}

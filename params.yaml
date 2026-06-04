@@ -1,0 +1,95 @@
+seed: 42
+data:
+  dataset: diabetes130
+  target_col: readmitted
+  positive_class: "<30"
+  binary_target_col: readmitted_30d
+  validation_size: 0.1
+  test_size: 0.2
+  calibration_size: 0.1
+  conformal_size: 0.1
+  temporal_split: false
+features:
+  drop_leakage:
+    - encounter_id
+    - patient_nbr
+  numeric:
+    - time_in_hospital
+    - num_lab_procedures
+    - num_procedures
+    - num_medications
+    - number_outpatient
+    - number_emergency
+    - number_inpatient
+    - number_diagnoses
+  categorical:
+    - race
+    - gender
+    - age
+    - weight
+    - admission_type_id
+    - discharge_disposition_id
+    - admission_source_id
+    - payer_code
+    - medical_specialty
+    - diag_1_group
+    - diag_2_group
+    - diag_3_group
+    - max_glu_serum
+    - A1Cresult
+    - metformin
+    - repaglinide
+    - nateglinide
+    - chlorpropamide
+    - glimepiride
+    - acetohexamide
+    - glipizide
+    - glyburide
+    - tolbutamide
+    - pioglitazone
+    - rosiglitazone
+    - acarbose
+    - miglitol
+    - troglitazone
+    - tolazamide
+    - examide
+    - citoglipton
+    - insulin
+    - glyburide-metformin
+    - glipizide-metformin
+    - glimepiride-pioglitazone
+    - metformin-rosiglitazone
+    - metformin-pioglitazone
+    - change
+    - diabetesMed
+  audit_only:
+    - race
+    - gender
+    - age
+model:
+  experiment_name: MedMLOps-Lab
+  registered_model_name: MedMLOps
+  champion_metric: auroc
+  baseline:
+    backend: xgboost
+    n_estimators: 50
+    max_depth: 2
+    learning_rate: 0.08
+    min_child_weight: 5
+    subsample: 1.0
+    colsample_bytree: 1.0
+    reg_lambda: 1.0
+  mlp:
+    hidden:
+      - 256
+      - 128
+      - 64
+    dropout: 0.3
+    epochs: 6
+    batch_size: 1024
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    use_class_weight: true
+tracking:
+  register_model: true
+  docker_base_image: python:3.12-slim

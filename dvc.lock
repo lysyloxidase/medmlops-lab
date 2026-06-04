@@ -1,0 +1,200 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python -m medmlops.cli ingest
+    deps:
+    - path: src/medmlops/cli.py
+      hash: md5
+      md5: 8e714aebec5d67e3ff3f3981a3932313
+      size: 5837
+    - path: src/medmlops/data/ingest.py
+      hash: md5
+      md5: 41e2a23e7ad9eaa1295dc5fb93538ed6
+      size: 2573
+    outs:
+    - path: data/raw/diabetes130.parquet
+      hash: md5
+      md5: 0ea447806548eb48bea835eb794288d3
+      size: 2758259
+    - path: data/raw/diabetes130.sha256
+      hash: md5
+      md5: 245525349f6e022c8953d0ee0a5153ad
+      size: 86
+  validate:
+    cmd: python -m medmlops.cli validate
+    deps:
+    - path: data/raw/diabetes130.parquet
+      hash: md5
+      md5: 0ea447806548eb48bea835eb794288d3
+      size: 2758259
+    - path: src/medmlops/cli.py
+      hash: md5
+      md5: 8e714aebec5d67e3ff3f3981a3932313
+      size: 5837
+    - path: src/medmlops/data/contracts.py
+      hash: md5
+      md5: 58d1abb709590afd3ccc68a60ca5b9f1
+      size: 8028
+    - path: src/medmlops/data/validate.py
+      hash: md5
+      md5: 5e9ebccdcecef4b887109f7334452bca
+      size: 3054
+    outs:
+    - path: data/interim/validated.parquet
+      hash: md5
+      md5: b19dd1ba200d6da9822ee7ca053381d5
+      size: 2773444
+    - path: reports/data_quality.json
+      hash: md5
+      md5: d838d070ad3775e6d76c18461f31b7a9
+      size: 1225
+  preprocess:
+    cmd: python -m medmlops.cli preprocess
+    deps:
+    - path: data/interim/validated.parquet
+      hash: md5
+      md5: b19dd1ba200d6da9822ee7ca053381d5
+      size: 2773444
+    - path: params.yaml
+      hash: md5
+      md5: f8c14720facbf57975a0b47f90e420aa
+      size: 1837
+    - path: src/medmlops/data/ids_mapping.py
+      hash: md5
+      md5: 13af79836d2b751b409e6f0c1b465b2f
+      size: 2150
+    - path: src/medmlops/features/pipeline.py
+      hash: md5
+      md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
+      size: 10147
+    outs:
+    - path: data/processed/features.parquet
+      hash: md5
+      md5: 49ad4a868fc54532ddbf07ab80218611
+      size: 1219868
+  split:
+    cmd: python -m medmlops.cli split
+    deps:
+    - path: data/processed/features.parquet
+      hash: md5
+      md5: 49ad4a868fc54532ddbf07ab80218611
+      size: 1219868
+    - path: params.yaml
+      hash: md5
+      md5: f8c14720facbf57975a0b47f90e420aa
+      size: 1837
+    - path: src/medmlops/features/pipeline.py
+      hash: md5
+      md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
+      size: 10147
+    params:
+      params.yaml:
+        data.calibration_size: 0.1
+        data.conformal_size: 0.1
+        data.test_size: 0.2
+        data.validation_size: 0.1
+        seed: 42
+    outs:
+    - path: data/processed/calib.parquet
+      hash: md5
+      md5: 81764e0a1c63d7c7d830d2070bbd4584
+      size: 147901
+    - path: data/processed/conformal.parquet
+      hash: md5
+      md5: fd5ad0865e951a837e0e6b2681518ad2
+      size: 150248
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: dffb77c214302024530118afdc8bfde7
+      size: 269572
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: a1249866ed23d50810f4de68183ee697
+      size: 626444
+    - path: data/processed/val.parquet
+      hash: md5
+      md5: 390443c6ce1a0b996f687ecfbe774db1
+      size: 148505
+  train:
+    cmd: python -m medmlops.cli train
+    deps:
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: dffb77c214302024530118afdc8bfde7
+      size: 269572
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: a1249866ed23d50810f4de68183ee697
+      size: 626444
+    - path: data/processed/val.parquet
+      hash: md5
+      md5: 390443c6ce1a0b996f687ecfbe774db1
+      size: 148505
+    - path: params.yaml
+      hash: md5
+      md5: f8c14720facbf57975a0b47f90e420aa
+      size: 1837
+    - path: src/medmlops/features/pipeline.py
+      hash: md5
+      md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
+      size: 10147
+    - path: src/medmlops/models/baseline.py
+      hash: md5
+      md5: 5e94997d1ddba91c3e9676591daeff87
+      size: 3300
+    - path: src/medmlops/models/tabular_mlp.py
+      hash: md5
+      md5: 1c11d21ce99bdf19dc21a6b64150da7a
+      size: 3810
+    - path: src/medmlops/models/tracking.py
+      hash: md5
+      md5: a36e6c926d3d77849606074a011df68c
+      size: 2624
+    - path: src/medmlops/models/train.py
+      hash: md5
+      md5: 76f009fe9e71af196bceff3023b68871
+      size: 13041
+    - path: uv.lock
+      hash: md5
+      md5: 8754dade6c2ad020bad04f6874320706
+      size: 628937
+    params:
+      params.yaml:
+        model:
+          experiment_name: MedMLOps-Lab
+          registered_model_name: MedMLOps
+          champion_metric: auroc
+          baseline:
+            backend: xgboost
+            n_estimators: 50
+            max_depth: 2
+            learning_rate: 0.08
+            min_child_weight: 5
+            subsample: 1.0
+            colsample_bytree: 1.0
+            reg_lambda: 1.0
+          mlp:
+            hidden:
+            - 256
+            - 128
+            - 64
+            dropout: 0.3
+            epochs: 6
+            batch_size: 1024
+            learning_rate: 0.001
+            weight_decay: 0.0001
+            use_class_weight: true
+        seed: 42
+    outs:
+    - path: models/baseline.pkl
+      hash: md5
+      md5: 209d8b9ce360a6eed5adc2cd5715d35d
+      size: 15294
+    - path: models/hero.pt
+      hash: md5
+      md5: 72223274d2515b5a1b6a3f258f70ec4d
+      size: 460039
+    - path: reports/train_metrics.json
+      hash: md5
+      md5: e4777cd9c756d383dedeac4ac3c515cd
+      size: 2476
