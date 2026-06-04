@@ -1,39 +1,46 @@
 # MedMLOps-Lab
 
-Reproducible, CPU-only clinical risk-prediction engineering for a portfolio
-setting. This repository is intentionally built as a production-shaped platform,
-not as a notebook.
+[![CI](https://github.com/lysyloxidase/medmlops-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/lysyloxidase/medmlops-lab/actions/workflows/ci.yml)
+[![Independent Reproduction](https://github.com/lysyloxidase/medmlops-lab/actions/workflows/independent-reproduction.yml/badge.svg)](https://github.com/lysyloxidase/medmlops-lab/actions/workflows/independent-reproduction.yml)
+[![Docs](https://img.shields.io/badge/docs-MkDocs-526CFE)](https://lysyloxidase.github.io/medmlops-lab/)
 
-> Portfolio demo only. MedMLOps-Lab is not a medical device and must not be used
-> for patient-care decisions.
+A production-shaped, CPU-only clinical risk-prediction platform that is
+simultaneously:
 
-## Five-Pillar Thesis
+1. 🔁 **Metric-hash reproducible** within the pinned Docker image on its
+   reference CPU architecture (`make reproduce`)
+2. 📋 **TRIPOD+AI mapped** with auto-generated evidence-linked reporting
+3. ⚖️ **Continuously fairness-audited**, with race retained for audit only
+4. 📉 **Drift-monitored**, including retrospective delayed-label performance
+5. 🛑 **Protected by a conformal abstention gate** for ambiguous predictions
 
-1. **Reproducibility first**: DVC stages, pinned params, and lock files make data
-   and model runs auditable.
-2. **Contracts before modeling**: Pandera schemas validate clinical tabular data
-   before features or training code can consume it.
-3. **CPU-only determinism**: the platform targets repeatable runs inside a
-   pinned Docker image on a fixed CPU architecture.
-4. **Clinical honesty**: class imbalance, leakage columns, missingness, and
-   fairness caveats are surfaced rather than hidden.
-5. **Governance by default**: docs, templates, licensing, and disclaimers are
-   first-class engineering artifacts.
+This is an engineering and portfolio demonstration, not a notebook.
 
-## Quickstart
+> **Portfolio and educational demo only. MedMLOps-Lab is not FDA-cleared,
+> CE-marked, or a medical device, and must not be used for patient care.**
 
-Prerequisites:
+## Laptop Quickstart
 
-- `uv` installed: https://docs.astral.sh/uv/getting-started/installation/
-- Docker, only if you want to run the local Postgres, MLflow, and MinIO stack
+Prerequisites: [uv](https://docs.astral.sh/uv/getting-started/installation/)
+and Docker.
 
 ```bash
+git clone https://github.com/lysyloxidase/medmlops-lab
+cd medmlops-lab
 make setup
 make test
-make data
-make train
-make clinical
+make reproduce
+make serve
 ```
+
+`make reproduce` forces every DVC stage and fails if any canonical metric hash
+diverges from `reports/reference_hashes.json`. The exact hash claim is scoped to
+the pinned Docker image and reference CPU architecture; cross-architecture
+equality is not promised.
+
+`make serve` materializes any missing local DVC artifacts, then launches the
+API, PostgreSQL prediction log, MLflow, and MinIO with Docker Compose. The API
+is available at `http://localhost:8000`.
 
 The `make data` target runs:
 
@@ -78,6 +85,11 @@ Phase 6 audits race, gender, and age as audit-only attributes with Fairlearn,
 including subgroup discrimination and calibration, then generates an
 evidence-linked Model Card, Datasheet, TRIPOD+AI checklist, PROBAST+AI
 self-assessment, and cautious FDA GMLP / EU AI Act framing.
+
+Phase 7 adds GitHub Actions CI/CD, CML pull-request reports, performance /
+calibration / fairness-regression gates, Docker integration testing, GHCR
+publishing, MkDocs deployment, and a no-cache independent-reproduction release
+gate.
 
 ## Phase 2 Training
 
@@ -137,6 +149,19 @@ The fairness audit never adds sensitive attributes to the predictor matrix.
 Governance mappings are aspirational self-assessments, not regulatory
 certification or evidence of clinical fitness.
 
+## Phase 7 CI/CD And Independent Reproduction
+
+Every push and pull request runs Ruff, strict Pyright, tests with at least 85%
+coverage, `dvc repro`, CML reporting, release quality gates, and full-stack
+Docker integration tests. Releases additionally build the image without cache,
+reproduce the pipeline in a fresh container, and compare canonical metric
+hashes against the committed reference.
+
+The fairness gate is a regression gate: it prevents any subgroup AUROC gap from
+widening more than `0.10` beyond the committed baseline. It does not conceal or
+claim resolution of the existing race and age gaps documented in the Model
+Card.
+
 ## Dataset
 
 Default source: Diabetes 130-US Hospitals for Years 1999-2008, UCI Machine
@@ -153,11 +178,12 @@ Learning Repository ID 296.
 ```bash
 make setup       # install dependencies with uv
 make data        # run DVC ingest, validation, preprocess, and split stages
-make reproduce   # reproduce every DVC stage
-make test        # run unit tests
+make reproduce   # force every DVC stage and verify metric hashes
+make test        # lint, type-check, and test with >=85% coverage
 make train       # train baseline + hero and log MLflow provenance
 make clinical    # calibrate, conformalize, and evaluate clinical metrics
 make monitor     # build drift baseline, simulate drift, monitor delayed labels
 make responsible-ai # run fairness audit and generate governance documents
-make serve       # run the FastAPI serving layer on http://localhost:8000
+make serve       # launch the full Docker Compose stack
+make docs        # serve the MkDocs site locally
 ```

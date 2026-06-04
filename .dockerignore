@@ -1,0 +1,17 @@
+.git
+.venv
+.dvc/cache
+.dvc/tmp
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+site
+mlruns
+audit.db
+data/raw/*
+data/interim/*
+data/processed/*
+models/*
+reports/*
+!reports/reference_hashes.json

@@ -296,7 +296,7 @@
   "impossibility_tradeoff": "When outcome base rates differ across groups, a calibrated score generally cannot also satisfy equalized odds except in special cases. This audit exposes the trade-off; it does not claim that the model is fully fair.",
   "egfr_race_lesson": "Race is a social and political construct, not a biological correction factor. The removal of race coefficients from eGFR equations is a cautionary lesson: race is retained here only to audit inequity and is never used as a predictor.",
   "provenance": {
-    "model_sha256": "f435c7642ed08020e25f19339199152d313ccd13083f7fb2695cff0001aaa24f",
+    "model_sha256": "a0b69a79e8e30bee9c17269e20673fd1b6ce09e282e05d96cd10149df6e7b67c",
     "test_data_sha256": "733b912434c9be8ba446d30b8ef1efeb6f20449dee0bd69e61c01c10c03860f2"
   }
 }

@@ -10,6 +10,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
 
+from medmlops import __version__
 from medmlops.serving.predict import PredictionService, RegistryLoader
 from medmlops.serving.schemas import (
     BatchPredictionResponse,
@@ -53,7 +54,7 @@ def create_app(
 
     api = FastAPI(
         title="MedMLOps-Lab Clinical Risk API",
-        version="0.1.0",
+        version=__version__,
         lifespan=lifespan,
     )
 

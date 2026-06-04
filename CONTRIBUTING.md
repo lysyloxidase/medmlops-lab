@@ -9,6 +9,10 @@ make setup
 make test
 ```
 
+`make setup` installs pre-commit, commit-message, and pre-push hooks. The hooks
+enforce Ruff, strict Pyright, Conventional Commits, and the unit-test coverage
+floor.
+
 ## Commit Style
 
 Use Conventional Commits:

@@ -12,3 +12,7 @@ regulatory, privacy, security, and institutional review.
 References to FDA GMLP, the EU AI Act, TRIPOD+AI, or PROBAST+AI are aspirational
 self-assessments only. They do not represent certification, approval, legal
 advice, or a regulatory classification determination.
+
+Passing CI, canonical metric-hash reproduction, quality gates, or Docker
+integration tests demonstrates engineering consistency only. It does not
+establish clinical validity, safety, efficacy, fairness, or fitness for use.

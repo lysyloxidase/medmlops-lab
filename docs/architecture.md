@@ -1,16 +1,23 @@
 # Architecture
 
-MedMLOps-Lab is organized as six production layers:
+MedMLOps-Lab v1.0.0 is organized as seven production-shaped layers:
 
-1. Data ingestion and versioning with DVC
-2. Data contracts and feature boundaries
-3. Model training, calibration, conformal intervals, and metrics
-4. CPU-only serving
-5. Monitoring and data-quality drift checks
-6. Fairness and governance documentation
+1. **Data and contracts**: UCI ingestion, DVC versioning, Pandera validation,
+   deterministic splits, and leakage boundaries.
+2. **Model development**: XGBoost-preferred baseline, PyTorch tabular MLP, CPU
+   determinism, and MLflow provenance.
+3. **Clinical rigor**: probability calibration, MAPIE conformal prediction,
+   abstention, AUPRC, calibration metrics, and decision-curve analysis.
+4. **Serving**: FastAPI, Pydantic validation, OOD checks, alias-based registry
+   loading, PostgreSQL prediction logging, and Prometheus metrics.
+5. **Monitoring**: Evidently, transparent PSI/KS/Wasserstein/MMD, synthetic
+   drift regimes, and delayed-label performance monitoring.
+6. **Responsible AI and governance**: audit-only protected attributes,
+   Fairlearn subgroup audits, Model Card, Datasheet, TRIPOD+AI, PROBAST+AI, and
+   cautious regulatory framing.
+7. **Release engineering**: GitHub Actions, CML, quality gates, Docker
+   integration, canonical metric hashes, no-cache independent reproduction,
+   GHCR publishing, and MkDocs deployment.
 
-Phase 1 implements the first layer and the contract boundary for the second.
-Phase 2 adds sklearn feature engineering, deterministic splits, an XGBoost
-baseline, a PyTorch tabular MLP hero model, and MLflow provenance tracking.
-Phase 3 adds probability calibration, MAPIE conformal abstention, and clinical
-utility metrics such as decision-curve net benefit.
+The primary ownership boundary is deliberate: race, gender, and age stay
+available for auditing but never enter the predictor matrix.

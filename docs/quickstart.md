@@ -1,42 +1,36 @@
 # Quickstart
 
-Install `uv` first:
-
-https://docs.astral.sh/uv/getting-started/installation/
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and Docker.
 
 ```bash
+git clone https://github.com/lysyloxidase/medmlops-lab
+cd medmlops-lab
 make setup
 make test
-make data
-make train
-make clinical
+make reproduce
+make serve
 ```
 
-`make data` runs the DVC stages:
+`make reproduce` downloads the public Diabetes 130-US Hospitals dataset,
+rebuilds all DVC stages, and verifies canonical metric hashes. It intentionally
+fails when the produced metrics diverge from the committed reference.
+
+`make serve` launches:
+
+- FastAPI at `http://localhost:8000`
+- MLflow at `http://localhost:5000`
+- MinIO at `http://localhost:9001`
+- PostgreSQL for append-only prediction audit records
+
+Useful commands:
 
 ```bash
-uv run dvc repro ingest validate preprocess split
+make data             # ingest, validate, preprocess, split
+make train            # model training stage
+make clinical         # calibration, conformalization, evaluation
+make monitor          # drift and delayed-label monitoring
+make responsible-ai   # fairness audit and governance documents
+make docs             # local MkDocs site
 ```
 
-Outputs:
-
-- `data/raw/diabetes130.parquet`
-- `data/raw/diabetes130.sha256`
-- `data/interim/validated.parquet`
-- `data/processed/features.parquet`
-- `data/processed/train.parquet`
-- `data/processed/val.parquet`
-- `data/processed/calib.parquet`
-- `data/processed/conformal.parquet`
-- `data/processed/test.parquet`
-- `reports/data_quality.json`
-- `models/hero.pt`
-- `models/baseline.pkl`
-- `reports/train_metrics.json`
-- `models/calibrated.pkl`
-- `models/conformal.pkl`
-- `reports/calibration_metrics.json`
-- `reports/conformal_metrics.json`
-- `reports/clinical_metrics.json`
-- `reports/figures/reliability.png`
-- `reports/figures/decision_curve.png`
+The project is a portfolio demonstration, not a medical device.

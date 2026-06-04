@@ -1,0 +1,30 @@
+{
+  "algorithm": "sha256(canonical-metric-json-v1)",
+  "excluded_non_metric_fields": {
+    "fairness.json": [
+      "provenance.model_sha256"
+    ]
+  },
+  "metrics": {
+    "calibration_metrics.json": "a6ebc902069af552043f8973ddc54696c3e774d4edeb9132185b5e0f8b0cfb00",
+    "clinical_metrics.json": "61682c8b0d8d357147acd36fe2410464b89ce5b176b8b6faefa54a0bd6624d4e",
+    "conformal_metrics.json": "0d400aeff4f7d2544b01f1bc9ce5c41314d66e9552d11706c96ee81d75213a5e",
+    "fairness.json": "6bd7595f8d18df4d5101188c243adcbf73ee0582f0478fe52905c5ec72a4e179",
+    "train_metrics.json": "54c613edad6e5ba486d727fd1b5cb36311d9cbc145e537b79eb9b65af4877de8"
+  },
+  "quality_baseline": {
+    "clinical_auroc": 0.6807097334,
+    "clinical_ece": 0.0029772234,
+    "subgroup_auroc_gaps": {
+      "age": 0.25433976542189574,
+      "gender": 0.005379067223838296,
+      "race": 0.16509531496214302
+    }
+  },
+  "reference_environment": {
+    "cpu_architecture": "arm64",
+    "python_version": "3.12.13"
+  },
+  "reproducibility_claim": "Bit-reproducible metric reports within the pinned Docker image on the reference CPU architecture; cross-architecture equality is not guaranteed.",
+  "schema_version": 1
+}

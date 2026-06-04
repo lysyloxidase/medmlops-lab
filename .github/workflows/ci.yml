@@ -1,0 +1,135 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint-type-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-groups
+      - name: Lint and formatting
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Type check
+        run: uv run pyright
+      - name: Test with coverage
+        run: uv run pytest --cov=medmlops --cov-report=xml --cov-fail-under=85
+
+  dvc-repro:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-groups
+      - name: Restore DVC CI remote
+        uses: actions/cache@v5
+        with:
+          path: .dvc/ci-cache
+          key: dvc-${{ runner.os }}-${{ hashFiles('dvc.lock', 'uv.lock', 'params.yaml') }}
+          restore-keys: |
+            dvc-${{ runner.os }}-
+      - name: Configure local DVC CI remote
+        run: |
+          uv run dvc remote add --local --force ci-cache .dvc/ci-cache
+          uv run dvc remote default --local ci-cache
+          uv run dvc pull || true
+      - name: Reproduce pipeline
+        run: uv run dvc repro
+      - name: Populate DVC CI remote
+        run: uv run dvc push
+      - name: CML report
+        if: github.event_name == 'pull_request'
+        uses: iterative/setup-cml@v2
+      - name: Post metrics and plots to pull request
+        if: github.event_name == 'pull_request'
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run dvc metrics show --md > report.md
+          echo '![Reliability](reports/figures/reliability.png)' >> report.md
+          echo '![Decision curve](reports/figures/decision_curve.png)' >> report.md
+          echo '![Subgroup AUROC](reports/figures/subgroup_auroc.png)' >> report.md
+          cml comment create --publish report.md
+      - name: Upload reproduced pipeline artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: reproduced-pipeline
+          path: |
+            reports/*.json
+            reports/figures/*.png
+            models/*.pkl
+            models/*.pt
+            data/processed/train.parquet
+
+  quality-gates:
+    needs: dvc-repro
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-groups
+      - uses: actions/download-artifact@v7
+        with:
+          name: reproduced-pipeline
+          path: .
+      - name: Performance gate
+        run: uv run medmlops check-performance --auroc-floor 0.62
+      - name: Calibration gate
+        run: uv run medmlops check-calibration --max-ece 0.03
+      - name: Fairness regression gate
+        run: uv run medmlops check-fairness --max-gap 0.10
+
+  docker-integration:
+    needs: dvc-repro
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-groups
+      - uses: actions/download-artifact@v7
+        with:
+          name: reproduced-pipeline
+          path: .
+      - name: Build image
+        run: docker build -f docker/Dockerfile -t medmlops:ci .
+      - name: Start full stack
+        run: |
+          docker compose -f docker/docker-compose.yml \
+            -f docker/docker-compose.ci.yml up -d --no-build
+          for attempt in $(seq 1 60); do
+            curl --fail http://localhost:8000/health && exit 0
+            sleep 5
+          done
+          exit 1
+      - name: Integration tests
+        env:
+          MEDMLOPS_INTEGRATION_BASE_URL: http://localhost:8000
+        run: uv run pytest tests/integration/ -v
+      - name: Full-stack logs
+        if: always()
+        run: |
+          docker compose -f docker/docker-compose.yml \
+            -f docker/docker-compose.ci.yml logs
+      - name: Stop full stack
+        if: always()
+        run: |
+          docker compose -f docker/docker-compose.yml \
+            -f docker/docker-compose.ci.yml down -v

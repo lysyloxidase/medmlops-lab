@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-06-04
+
 ### Added
 
 - Phase 1 repository scaffold.
@@ -29,3 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 6 Fairlearn subgroup discrimination/calibration audit with audit-only
   protected attributes, a fairness regression gate, and generated Model Card,
   Datasheet, TRIPOD+AI, PROBAST+AI, FDA GMLP, and EU AI Act governance framing.
+- Phase 7 GitHub Actions CI/CD with CML pull-request reports, performance /
+  calibration / fairness-regression gates, Docker Compose integration tests,
+  no-cache independent reproduction with canonical metric hashes, GHCR
+  publishing, MkDocs deployment, and v1.0.0 release automation.
+
+[Unreleased]: https://github.com/lysyloxidase/medmlops-lab/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/lysyloxidase/medmlops-lab/releases/tag/v1.0.0

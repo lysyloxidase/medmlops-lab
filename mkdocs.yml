@@ -1,6 +1,8 @@
 site_name: MedMLOps-Lab
 site_description: Reproducible CPU-only clinical risk-prediction MLOps platform
 repo_name: medmlops-lab
+repo_url: https://github.com/lysyloxidase/medmlops-lab
+site_url: https://lysyloxidase.github.io/medmlops-lab/
 theme:
   name: material
   features:
@@ -12,6 +14,7 @@ nav:
   - Quickstart: quickstart.md
   - Architecture: architecture.md
   - Reproducibility: reproducibility.md
+  - CI/CD And Release: ci-cd.md
   - Monitoring: monitoring.md
   - Data Dictionary: data-dictionary.md
   - ADRs:

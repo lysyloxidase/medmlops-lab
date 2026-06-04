@@ -1,0 +1,49 @@
+name: Independent Reproduction
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce-from-scratch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-groups
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - name: Build image from scratch with no cache
+        run: |
+          docker build --no-cache --platform linux/arm64 \
+            -f docker/Dockerfile -t medmlops:repro .
+      - name: Verify CPU-only container startup
+        run: |
+          docker run --rm --platform linux/arm64 medmlops:repro python -c \
+            "import torch; assert '+cpu' in torch.__version__; assert not torch.cuda.is_available()"
+      - name: Reproduce every metric in a fresh container
+        run: |
+          mkdir -p out
+          docker run --rm --platform linux/arm64 \
+            -v "${{ github.workspace }}/out:/out" \
+            medmlops:repro sh -c \
+            'make reproduce && cp reports/*metrics.json reports/fairness.json /out/'
+      - name: Verify metric hashes against committed reference
+        run: |
+          uv run medmlops verify-reproduction \
+            --produced out/ \
+            --reference reports/reference_hashes.json
+      - name: Reproducibility badge
+        run: echo "Gold-standard independent reproduction verified (Heil et al. 2021)."
+      - uses: actions/upload-artifact@v7
+        with:
+          name: independent-reproduction-metrics
+          path: out/

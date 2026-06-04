@@ -1,5 +1,6 @@
 services:
   app:
+    image: medmlops:local
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -16,13 +17,17 @@ services:
       --host 0.0.0.0
       --port 8000
     ports:
-      - "8000:8000"
+      - "${MEDMLOPS_API_PORT:-8000}:8000"
     volumes:
       - ..:/app
+      - app-venv:/app/.venv
     depends_on:
-      - postgres
-      - mlflow
-      - minio
+      postgres:
+        condition: service_healthy
+      mlflow:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
 
   postgres:
     image: postgres:16-alpine
@@ -31,27 +36,46 @@ services:
       POSTGRES_USER: medmlops
       POSTGRES_PASSWORD: medmlops
     ports:
-      - "5432:5432"
+      - "${MEDMLOPS_POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medmlops -d medmlops"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.13.0
+    image: ghcr.io/mlflow/mlflow:v3.13.0
     command: >
       mlflow server
       --host 0.0.0.0
       --port 5000
-      --backend-store-uri postgresql://medmlops:medmlops@postgres:5432/medmlops
+      --backend-store-uri sqlite:////mlflow/mlflow.db
       --default-artifact-root s3://mlflow/artifacts
+      --allowed-hosts mlflow:5000,localhost,127.0.0.1
     environment:
       AWS_ACCESS_KEY_ID: medmlops
       AWS_SECRET_ACCESS_KEY: medmlops-secret
       MLFLOW_S3_ENDPOINT_URL: http://minio:9000
     ports:
-      - "5000:5000"
+      - "${MEDMLOPS_MLFLOW_PORT:-5000}:5000"
     depends_on:
-      - postgres
-      - minio-init
+      minio-init:
+        condition: service_completed_successfully
+    volumes:
+      - mlflow-data:/mlflow
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   minio:
     image: minio/minio:RELEASE.2024-05-10T01-41-38Z
@@ -60,10 +84,15 @@ services:
       MINIO_ROOT_USER: medmlops
       MINIO_ROOT_PASSWORD: medmlops-secret
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "${MEDMLOPS_MINIO_PORT:-9000}:9000"
+      - "${MEDMLOPS_MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
       - minio-data:/data
+    healthcheck:
+      test: ["CMD", "/usr/bin/mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   minio-init:
     image: minio/mc:RELEASE.2024-05-09T17-04-24Z
@@ -78,5 +107,7 @@ services:
       "
 
 volumes:
+  app-venv:
   postgres-data:
   minio-data:
+  mlflow-data:

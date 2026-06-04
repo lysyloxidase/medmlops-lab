@@ -1,19 +1,26 @@
 services:
   app:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: ["make", "test"]
+    image: medmlops:ci
+    command:
+      [
+        "uvicorn",
+        "medmlops.serving.app:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+      ]
     environment:
       MEDMLOPS_ENV: ci
+      MEDMLOPS_REGISTRY_REQUIRED: "0"
       OMP_NUM_THREADS: "1"
       MKL_NUM_THREADS: "1"
 
   postgres:
-    ports: []
+    ports: !reset []
 
   mlflow:
-    ports: []
+    ports: !reset []
 
   minio:
-    ports: []
+    ports: !reset []

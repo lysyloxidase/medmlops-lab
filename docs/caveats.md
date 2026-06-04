@@ -36,3 +36,9 @@ Project caveats:
     factor. Its presence in this project is limited to auditing inequity.
 22. FDA GMLP, EU AI Act, TRIPOD+AI, and PROBAST+AI mappings are aspirational
     self-assessments, not certification, approval, or legal advice.
+23. Canonical metric-hash equality is an engineering reproducibility check; it
+    does not establish clinical validity, safety, usefulness, or transportability.
+24. Exact reproduction is scoped to the pinned Docker image and reference CPU
+    architecture. PyTorch and numerical libraries can differ across platforms.
+25. The fairness release gate detects widening relative to a committed baseline;
+    it does not declare existing subgroup gaps acceptable or resolved.

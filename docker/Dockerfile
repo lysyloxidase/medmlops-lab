@@ -1,28 +1,29 @@
-FROM ghcr.io/astral-sh/uv:0.5-python3.12-bookworm-slim AS builder
+FROM ghcr.io/astral-sh/uv:0.11.18-python3.12-trixie-slim@sha256:9f9a7c30d604c8297ac14321b91b42f8516ff207f42b76b1bf29974fad523f6e
 
-WORKDIR /app
-
-COPY pyproject.toml uv.lock* README.md ./
-COPY src ./src
-
-RUN uv sync --no-dev --frozen || uv sync --no-dev
-
-FROM python:3.12-slim AS runtime
+LABEL org.opencontainers.image.title="MedMLOps-Lab"
+LABEL org.opencontainers.image.description="CPU-only clinical risk MLOps reference platform"
+LABEL org.opencontainers.image.source="https://github.com/lysyloxidase/medmlops-lab"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
+    OMP_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
     PATH="/app/.venv/bin:${PATH}"
 
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgomp1 \
+    && apt-get install -y --no-install-recommends curl git libgomp1 make \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app /app
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY pyproject.toml uv.lock README.md ./
+RUN uv sync --frozen --all-groups --no-install-project
 
-RUN chmod +x /entrypoint.sh
+COPY . .
+RUN printf '[core]\n    no_scm = true\n' > .dvc/config.local \
+    && chmod +x docker/entrypoint.sh \
+    && uv sync --frozen --all-groups
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/docker/entrypoint.sh"]
 CMD ["medmlops", "--help"]

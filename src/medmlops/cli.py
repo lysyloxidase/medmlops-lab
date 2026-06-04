@@ -484,6 +484,139 @@ def governance(
         console.print(f"Wrote {name}: {destination}")
 
 
+@app.command("check-performance")
+def check_performance_command(
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Clinical metrics JSON path."),
+    ] = Path("reports/clinical_metrics.json"),
+    auroc_floor: Annotated[
+        float,
+        typer.Option("--auroc-floor", help="Minimum held-out clinical AUROC."),
+    ] = 0.62,
+) -> None:
+    """Enforce the held-out clinical-performance release gate."""
+
+    from medmlops.quality.gates import QualityGateError, check_performance
+
+    try:
+        result = check_performance(report_path, auroc_floor=auroc_floor)
+    except (FileNotFoundError, TypeError, QualityGateError) as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    console.print(result)
+
+
+@app.command("check-calibration")
+def check_calibration_command(
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Clinical metrics JSON path."),
+    ] = Path("reports/clinical_metrics.json"),
+    max_ece: Annotated[
+        float,
+        typer.Option("--max-ece", help="Maximum held-out ECE."),
+    ] = 0.03,
+) -> None:
+    """Enforce the held-out calibration release gate."""
+
+    from medmlops.quality.gates import QualityGateError, check_calibration
+
+    try:
+        result = check_calibration(report_path, max_ece=max_ece)
+    except (FileNotFoundError, TypeError, QualityGateError) as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    console.print(result)
+
+
+@app.command("check-fairness")
+def check_fairness_command(
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Current fairness audit JSON path."),
+    ] = Path("reports/fairness.json"),
+    reference_path: Annotated[
+        Path,
+        typer.Option("--reference", help="Committed reproduction reference manifest."),
+    ] = Path("reports/reference_hashes.json"),
+    max_gap: Annotated[
+        float,
+        typer.Option("--max-gap", help="Maximum allowed subgroup AUROC-gap widening."),
+    ] = 0.10,
+) -> None:
+    """Enforce the subgroup AUROC-gap regression gate."""
+
+    from medmlops.quality.gates import QualityGateError, check_fairness
+
+    try:
+        result = check_fairness(report_path, reference_path, max_gap=max_gap)
+    except (FileNotFoundError, TypeError, QualityGateError) as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    console.print(result)
+
+
+@app.command("write-reference-hashes")
+def write_reference_hashes_command(
+    report_dir: Annotated[
+        Path,
+        typer.Option("--reports", help="Directory containing release metric reports."),
+    ] = Path("reports"),
+    output_path: Annotated[
+        Path,
+        typer.Option("--output", help="Reference hash-manifest output path."),
+    ] = Path("reports/reference_hashes.json"),
+) -> None:
+    """Write canonical release metric hashes after a trusted reproduction."""
+
+    from medmlops.quality.reproduction import write_reference_hashes
+
+    destination = write_reference_hashes(report_dir, output_path)
+    console.print(f"Wrote reproduction reference: {destination}")
+
+
+@app.command("verify-reproduction")
+def verify_reproduction_command(
+    produced_dir: Annotated[
+        Path,
+        typer.Option("--produced", help="Directory containing reproduced metrics."),
+    ] = Path("reports"),
+    reference_path: Annotated[
+        Path,
+        typer.Option("--reference", help="Committed reference-hash manifest."),
+    ] = Path("reports/reference_hashes.json"),
+    require_architecture: Annotated[
+        bool,
+        typer.Option(
+            "--require-architecture/--allow-cross-architecture",
+            help="Require the reference CPU architecture to match.",
+        ),
+    ] = False,
+) -> None:
+    """Fail when independently reproduced metric hashes diverge."""
+
+    from medmlops.quality.reproduction import (
+        ReproductionMismatchError,
+        verify_reproduction,
+    )
+
+    try:
+        result = verify_reproduction(
+            produced_dir,
+            reference_path,
+            require_architecture=require_architecture,
+        )
+    except (
+        FileNotFoundError,
+        TypeError,
+        ReproductionMismatchError,
+    ) as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    console.print(result)
+
+
 @app.command()
 def version() -> None:
     """Print package version."""
