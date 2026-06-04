@@ -1,4 +1,4 @@
-.PHONY: setup data train clinical serve reproduce test lint format clean
+.PHONY: setup data train clinical monitor serve evidently-ui reproduce test lint format clean
 
 setup:
 	uv sync --all-groups
@@ -17,8 +17,16 @@ train:
 clinical:
 	uv run dvc repro calibrate conformalize evaluate
 
+monitor:
+	uv run dvc repro drift_baseline
+	uv run medmlops simulate-drift
+	uv run medmlops monitor-performance
+
 serve:
 	uv run uvicorn medmlops.serving.app:app --host 0.0.0.0 --port 8000
+
+evidently-ui:
+	uv run evidently ui --workspace reports/evidently-workspace --port 8001
 
 reproduce:
 	uv run dvc repro

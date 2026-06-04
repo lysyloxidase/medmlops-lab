@@ -23,3 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   warm-loading, conformal/OOD abstention, PostgreSQL prediction audit logging,
   Prometheus metrics, model-info, batch prediction, and challenger shadow
   routing.
+- Phase 5 Evidently drift reports/test suites, transparent PSI/KS/Wasserstein/MMD
+  metrics with persisted alerts, synthetic three-regime drift simulation, and
+  retrospective delayed-label performance monitoring.

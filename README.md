@@ -69,6 +69,11 @@ clinical validation, abstains on ambiguous/empty conformal sets or OOD numeric
 quantile flags, exposes Prometheus metrics, and writes append-only prediction
 audit rows to PostgreSQL in Docker or `audit.db` locally.
 
+Phase 5 builds an Evidently training-distribution baseline, transparent custom
+PSI/KS/Wasserstein/MMD checks, a clearly labeled synthetic three-regime drift
+demo, and retrospective delayed-label performance monitoring from the prediction
+audit log.
+
 ## Phase 2 Training
 
 Every training run fits both models:
@@ -106,6 +111,17 @@ The main endpoints are `POST /predict`, `POST /batch-predict`, `GET /health`,
 8000 and uses the Compose PostgreSQL service for the append-only `predictions`
 audit table.
 
+## Phase 5 Monitoring
+
+```bash
+make monitor
+make evidently-ui
+```
+
+The local Evidently workspace UI runs on `http://localhost:8001`. Synthetic
+drift outputs are demonstrations only; delayed-label performance reports are
+retrospective and reflect only the labeled subset.
+
 ## Dataset
 
 Default source: Diabetes 130-US Hospitals for Years 1999-2008, UCI Machine
@@ -126,5 +142,6 @@ make reproduce   # reproduce every DVC stage
 make test        # run unit tests
 make train       # train baseline + hero and log MLflow provenance
 make clinical    # calibrate, conformalize, and evaluate clinical metrics
+make monitor     # build drift baseline, simulate drift, monitor delayed labels
 make serve       # run the FastAPI serving layer on http://localhost:8000
 ```

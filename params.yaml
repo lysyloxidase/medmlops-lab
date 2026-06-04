@@ -120,3 +120,11 @@ serving:
     reference_path: data/processed/train.parquet
     lower_quantile: 0.01
     upper_quantile: 0.99
+monitoring:
+  evidently_version_pin: "0.7.21"
+  psi_warn: 0.10
+  psi_alert: 0.25
+  performance_auroc_floor: 0.60
+  clinical_threshold: 0.10
+  drift_feature: num_medications
+  workspace_path: reports/evidently-workspace

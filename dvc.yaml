@@ -120,3 +120,16 @@ stages:
           cache: false
     plots:
       - reports/figures/decision_curve.png
+  drift_baseline:
+    cmd: python -m medmlops.cli drift-baseline
+    deps:
+      - src/medmlops/monitoring/
+      - src/medmlops/features/pipeline.py
+      - src/medmlops/cli.py
+      - data/processed/train.parquet
+      - params.yaml
+    params:
+      - features
+      - monitoring.evidently_version_pin
+    outs:
+      - reports/drift/reference_snapshot.parquet

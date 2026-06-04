@@ -1,0 +1,7 @@
+{
+  "alert": false,
+  "auroc_floor": 0.6,
+  "caveat": "Performance drift is detectable only retrospectively.",
+  "labeled_count": 0,
+  "status": "INSUFFICIENT_LABELS"
+}

@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/medmlops/cli.py
       hash: md5
-      md5: e26555d772153dd3f3a1344c1341e7b2
-      size: 10102
+      md5: 3efbb3305c5503ba05c593595fd5d67f
+      size: 14183
     - path: src/medmlops/data/ingest.py
       hash: md5
       md5: 41e2a23e7ad9eaa1295dc5fb93538ed6
@@ -29,8 +29,8 @@ stages:
       size: 2758259
     - path: src/medmlops/cli.py
       hash: md5
-      md5: e26555d772153dd3f3a1344c1341e7b2
-      size: 10102
+      md5: 3efbb3305c5503ba05c593595fd5d67f
+      size: 14183
     - path: src/medmlops/data/contracts.py
       hash: md5
       md5: 58d1abb709590afd3ccc68a60ca5b9f1
@@ -57,8 +57,8 @@ stages:
       size: 2773444
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/data/ids_mapping.py
       hash: md5
       md5: 13af79836d2b751b409e6f0c1b465b2f
@@ -81,8 +81,8 @@ stages:
       size: 1219868
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/features/pipeline.py
       hash: md5
       md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
@@ -132,8 +132,8 @@ stages:
       size: 148505
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/features/pipeline.py
       hash: md5
       md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
@@ -156,8 +156,8 @@ stages:
       size: 13081
     - path: uv.lock
       hash: md5
-      md5: 22e8aaa85ffa21a0ba38ba5c7e794e2e
-      size: 642140
+      md5: 6e4694bc04c093469931a621cb18f930
+      size: 748276
     params:
       params.yaml:
         model:
@@ -215,8 +215,8 @@ stages:
       size: 473543
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -238,8 +238,8 @@ stages:
     outs:
     - path: models/calibrated.pkl
       hash: md5
-      md5: 46daec8d4411da6b21ba9f73c28e2fb3
-      size: 417650
+      md5: 3e4dfa57cdc6579638b264c9b351d3f7
+      size: 417643
     - path: reports/calibration_metrics.json
       hash: md5
       md5: 227afbf7aebc5c834623110b35d73430
@@ -261,12 +261,12 @@ stages:
       size: 269572
     - path: models/calibrated.pkl
       hash: md5
-      md5: 46daec8d4411da6b21ba9f73c28e2fb3
-      size: 417650
+      md5: 3e4dfa57cdc6579638b264c9b351d3f7
+      size: 417643
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -285,8 +285,8 @@ stages:
     outs:
     - path: models/conformal.pkl
       hash: md5
-      md5: ae6488b7d4b3a651c3d1d9b3ac3d5a04
-      size: 432714
+      md5: fcdb62ac6f34448b8c4d556158981f13
+      size: 432716
     - path: reports/conformal_metrics.json
       hash: md5
       md5: 0b591a07190b028f7d10edcef226a586
@@ -300,12 +300,12 @@ stages:
       size: 269572
     - path: models/conformal.pkl
       hash: md5
-      md5: ae6488b7d4b3a651c3d1d9b3ac3d5a04
-      size: 432714
+      md5: fcdb62ac6f34448b8c4d556158981f13
+      size: 432716
     - path: params.yaml
       hash: md5
-      md5: 973964fa303a6af7abc223be3df123e7
-      size: 2414
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
     - path: src/medmlops/calibration/calibrate.py
       hash: md5
       md5: e2855f8da8b6bf12df8107ef68063bdd
@@ -331,3 +331,92 @@ stages:
       hash: md5
       md5: 80b5ceb2bb7eca769f2fdd960a6a7f8b
       size: 55369
+  drift_baseline:
+    cmd: python -m medmlops.cli drift-baseline
+    deps:
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: a1249866ed23d50810f4de68183ee697
+      size: 626444
+    - path: params.yaml
+      hash: md5
+      md5: 84f8956d94595235c375cc44ccf29cd5
+      size: 2633
+    - path: src/medmlops/cli.py
+      hash: md5
+      md5: 3efbb3305c5503ba05c593595fd5d67f
+      size: 14183
+    - path: src/medmlops/features/pipeline.py
+      hash: md5
+      md5: 3d0d0dd2be20d6fb59f3ba398578ebbe
+      size: 10147
+    - path: src/medmlops/monitoring/
+      hash: md5
+      md5: 6114ba760a46f98f134e4e2fad4913f8.dir
+      size: 32998
+      nfiles: 5
+    params:
+      params.yaml:
+        features:
+          drop_leakage:
+          - encounter_id
+          - patient_nbr
+          numeric:
+          - time_in_hospital
+          - num_lab_procedures
+          - num_procedures
+          - num_medications
+          - number_outpatient
+          - number_emergency
+          - number_inpatient
+          - number_diagnoses
+          categorical:
+          - race
+          - gender
+          - age
+          - weight
+          - admission_type_id
+          - discharge_disposition_id
+          - admission_source_id
+          - payer_code
+          - medical_specialty
+          - diag_1_group
+          - diag_2_group
+          - diag_3_group
+          - max_glu_serum
+          - A1Cresult
+          - metformin
+          - repaglinide
+          - nateglinide
+          - chlorpropamide
+          - glimepiride
+          - acetohexamide
+          - glipizide
+          - glyburide
+          - tolbutamide
+          - pioglitazone
+          - rosiglitazone
+          - acarbose
+          - miglitol
+          - troglitazone
+          - tolazamide
+          - examide
+          - citoglipton
+          - insulin
+          - glyburide-metformin
+          - glipizide-metformin
+          - glimepiride-pioglitazone
+          - metformin-rosiglitazone
+          - metformin-pioglitazone
+          - change
+          - diabetesMed
+          audit_only:
+          - race
+          - gender
+          - age
+        monitoring.evidently_version_pin: 0.7.21
+    outs:
+    - path: reports/drift/reference_snapshot.parquet
+      hash: md5
+      md5: 4ff0a7116bd1fbf0496c20444ca22ad8
+      size: 604769

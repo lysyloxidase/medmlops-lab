@@ -21,6 +21,11 @@ Project caveats:
     subgroup, and can break under drift.
 15. Net benefit depends on the chosen clinical threshold probabilities and does
     not establish clinical utility by itself.
-16. Future monitoring requires production-like data.
-17. Any real-world use would require independent clinical, legal, security, and
+16. The Phase 5 covariate, prior-probability, and concept drift regimes are
+    synthetic injections for demonstration, not observed real-world drift.
+17. Performance drift is detectable only retrospectively on the subset with
+    delayed ground-truth labels; missing or selectively available labels can
+    bias the monitoring result.
+18. Future monitoring requires production-like data.
+19. Any real-world use would require independent clinical, legal, security, and
     regulatory review.

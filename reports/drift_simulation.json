@@ -1,0 +1,23 @@
+{
+  "regimes": {
+    "concept_shift": {
+      "conditional_shift_score": 0.190777284502006,
+      "detected": true,
+      "taxonomy": "P(Y|X)"
+    },
+    "covariate_shift": {
+      "detected": true,
+      "feature": "num_medications",
+      "psi": 8.54329187615372,
+      "status": "ALERT",
+      "taxonomy": "P(X)"
+    },
+    "prior_probability_shift": {
+      "current_positive_rate": 0.49999017314911265,
+      "detected": true,
+      "reference_positive_rate": 0.1115937186769128,
+      "taxonomy": "P(Y)"
+    }
+  },
+  "title": "SYNTHETIC DRIFT DEMONSTRATION: injected shifts are not observed real-world drift."
+}

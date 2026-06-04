@@ -12,6 +12,7 @@ nav:
   - Quickstart: quickstart.md
   - Architecture: architecture.md
   - Reproducibility: reproducibility.md
+  - Monitoring: monitoring.md
   - Data Dictionary: data-dictionary.md
   - ADRs:
       - Dataset Choice: adr/0001-dataset-choice.md

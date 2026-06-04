@@ -319,6 +319,115 @@ def evaluate(
     console.print(f"Wrote clinical metrics: {metrics}")
 
 
+@app.command("drift-baseline")
+def drift_baseline(
+    train_path: Annotated[
+        Path,
+        typer.Option("--train-path", help="Training split used as drift reference."),
+    ] = Path("data/processed/train.parquet"),
+    output_path: Annotated[
+        Path,
+        typer.Option("--output-path", help="Drift reference snapshot output path."),
+    ] = Path("reports/drift/reference_snapshot.parquet"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Build the input-distribution reference snapshot."""
+
+    from medmlops.monitoring.drift import build_drift_baseline
+
+    destination = build_drift_baseline(train_path, output_path, params_path)
+    console.print(f"Wrote drift reference snapshot: {destination}")
+
+
+@app.command("simulate-drift")
+def simulate_drift(
+    input_path: Annotated[
+        Path,
+        typer.Option("--input-path", help="Feature source used for synthetic shifts."),
+    ] = Path("data/processed/train.parquet"),
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Synthetic drift report JSON path."),
+    ] = Path("reports/drift_simulation.json"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Run the clearly labeled synthetic three-regime drift demo."""
+
+    import os
+
+    import pandas as pd
+
+    from medmlops.features.pipeline import load_yaml
+    from medmlops.monitoring.simulate import run_synthetic_drift_demo
+
+    params = load_yaml(params_path)
+    monitoring = params.get("monitoring", {})
+    serving = params.get("serving", {})
+    if not isinstance(monitoring, dict) or not isinstance(serving, dict):
+        msg = "params.yaml monitoring and serving sections must be mappings"
+        raise TypeError(msg)
+    database_url = os.environ.get("MEDMLOPS_AUDIT_DATABASE_URL") or str(
+        serving.get("audit_database_url", "sqlite:///audit.db")
+    )
+    destination = run_synthetic_drift_demo(
+        pd.read_parquet(input_path),
+        feature=str(monitoring.get("drift_feature", "num_medications")),
+        database_url=database_url,
+        report_path=report_path,
+        workspace_path=str(
+            monitoring.get("workspace_path", "reports/evidently-workspace")
+        ),
+        psi_warn=float(monitoring.get("psi_warn", 0.10)),
+        psi_alert=float(monitoring.get("psi_alert", 0.25)),
+    )
+    console.print(f"Wrote SYNTHETIC drift simulation report: {destination}")
+
+
+@app.command("monitor-performance")
+def monitor_performance(
+    report_path: Annotated[
+        Path,
+        typer.Option("--report-path", help="Delayed-label performance report path."),
+    ] = Path("reports/performance_monitoring.json"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Run the scheduled delayed-label performance monitoring job."""
+
+    import os
+
+    from medmlops.features.pipeline import load_yaml
+    from medmlops.monitoring.performance import monitor_delayed_labels
+
+    params = load_yaml(params_path)
+    monitoring = params.get("monitoring", {})
+    serving = params.get("serving", {})
+    if not isinstance(monitoring, dict) or not isinstance(serving, dict):
+        msg = "params.yaml monitoring and serving sections must be mappings"
+        raise TypeError(msg)
+    database_url = os.environ.get("MEDMLOPS_AUDIT_DATABASE_URL") or str(
+        serving.get("audit_database_url", "sqlite:///audit.db")
+    )
+    destination = monitor_delayed_labels(
+        database_url,
+        auroc_floor=float(monitoring.get("performance_auroc_floor", 0.60)),
+        clinical_threshold=float(monitoring.get("clinical_threshold", 0.10)),
+        report_path=report_path,
+        workspace_path=str(
+            monitoring.get("workspace_path", "reports/evidently-workspace")
+        ),
+    )
+    console.print(f"Wrote delayed-label performance report: {destination}")
+
+
 @app.command()
 def version() -> None:
     """Print package version."""

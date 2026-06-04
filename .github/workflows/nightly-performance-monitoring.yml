@@ -1,0 +1,21 @@
+name: Nightly delayed-label performance monitoring
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  monitor-performance:
+    runs-on: ubuntu-latest
+    env:
+      MEDMLOPS_AUDIT_DATABASE_URL: ${{ secrets.MEDMLOPS_AUDIT_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen
+      - run: uv run medmlops monitor-performance
+      - uses: actions/upload-artifact@v4
+        with:
+          name: delayed-label-performance-report
+          path: reports/performance_monitoring.json
