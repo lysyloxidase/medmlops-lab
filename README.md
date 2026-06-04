@@ -63,6 +63,12 @@ Phase 3 writes calibrated and conformal artifacts to `models/`, clinical metrics
 to `reports/clinical_metrics.json`, and reliability/decision-curve plots under
 `reports/figures/`.
 
+Phase 4 serves the calibrated conformal gate through FastAPI. The app warm-loads
+the MLflow `models:/MedMLOps@champion` alias at startup, applies Pydantic v2
+clinical validation, abstains on ambiguous/empty conformal sets or OOD numeric
+quantile flags, exposes Prometheus metrics, and writes append-only prediction
+audit rows to PostgreSQL in Docker or `audit.db` locally.
+
 ## Phase 2 Training
 
 Every training run fits both models:
@@ -87,6 +93,19 @@ Reports include ECE, Brier score, calibration slope/intercept, AUPRC,
 sensitivity/specificity/PPV/NPV at clinical thresholds, decision-curve net
 benefit, and conformal marginal coverage.
 
+## Phase 4 Serving
+
+Run the API locally after the Phase 3 artifacts exist:
+
+```bash
+make serve
+```
+
+The main endpoints are `POST /predict`, `POST /batch-predict`, `GET /health`,
+`GET /metrics`, and `GET /model-info`. Docker Compose binds the app on port
+8000 and uses the Compose PostgreSQL service for the append-only `predictions`
+audit table.
+
 ## Dataset
 
 Default source: Diabetes 130-US Hospitals for Years 1999-2008, UCI Machine
@@ -107,5 +126,5 @@ make reproduce   # reproduce every DVC stage
 make test        # run unit tests
 make train       # train baseline + hero and log MLflow provenance
 make clinical    # calibrate, conformalize, and evaluate clinical metrics
-make serve       # Phase 4 placeholder
+make serve       # run the FastAPI serving layer on http://localhost:8000
 ```

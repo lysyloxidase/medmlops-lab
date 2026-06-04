@@ -18,7 +18,7 @@ clinical:
 	uv run dvc repro calibrate conformalize evaluate
 
 serve:
-	@echo "Serving is introduced in Phase 4."
+	uv run uvicorn medmlops.serving.app:app --host 0.0.0.0 --port 8000
 
 reproduce:
 	uv run dvc repro

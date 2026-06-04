@@ -7,9 +7,16 @@ services:
       MEDMLOPS_CONFIG_PATH: /app/configs/config.yaml
       MLFLOW_TRACKING_URI: http://mlflow:5000
       MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      MEDMLOPS_AUDIT_DATABASE_URL: postgresql+psycopg://medmlops:medmlops@postgres:5432/medmlops
       AWS_ACCESS_KEY_ID: medmlops
       AWS_SECRET_ACCESS_KEY: medmlops-secret
       DVC_S3_ENDPOINT_URL: http://minio:9000
+    command: >
+      uvicorn medmlops.serving.app:app
+      --host 0.0.0.0
+      --port 8000
+    ports:
+      - "8000:8000"
     volumes:
       - ..:/app
     depends_on:

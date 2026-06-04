@@ -19,3 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 3 isotonic/Platt/temperature calibration, reliability diagrams, MAPIE
   conformal abstention, and clinical metrics including decision-curve net
   benefit.
+- Phase 4 FastAPI serving with Pydantic v2 clinical validation, MLflow alias
+  warm-loading, conformal/OOD abstention, PostgreSQL prediction audit logging,
+  Prometheus metrics, model-info, batch prediction, and challenger shadow
+  routing.

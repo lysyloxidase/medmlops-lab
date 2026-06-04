@@ -39,6 +39,7 @@ site/
 /models/*
 !/models/.gitkeep
 /mlruns/
+/audit.db
 
 # OS/editor
 .DS_Store

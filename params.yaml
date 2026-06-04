@@ -107,3 +107,16 @@ evaluation:
     - 0.15
     - 0.2
     - 0.3
+serving:
+  model_name: MedMLOps
+  model_alias: champion
+  challenger_alias: challenger
+  challenger_fraction: 0.0
+  conformal_model_path: models/conformal.pkl
+  audit_database_url: sqlite:///audit.db
+  training_metrics_path: reports/train_metrics.json
+  random_seed: 42
+  ood:
+    reference_path: data/processed/train.parquet
+    lower_quantile: 0.01
+    upper_quantile: 0.99
