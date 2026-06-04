@@ -79,6 +79,6 @@ Retrospective performance and calibration do not establish clinical utility.
 
 ## Reproducibility
 
-- Git commit: `e1ddcb44a9486507b552a2fb48365aabf20ad97a`
+- Git commit: `9ff94176fd1559b6e1cc716bd54ac303c3585b63`
 - `uv.lock` SHA-256: `b85daca89acff72959e5b35816ba2f38f4a121f0af560b89d7d3cecad1265719`
-- `dvc.lock` SHA-256 at generation time: `0e8c728d20d0ca02593afe60b0e71c40a26da7227f18ded4d2d20d41d3f4f8ec`
+- `dvc.lock` SHA-256 at generation time: `3c5a8b205515fc42283b0c06876ce21d42b0e5fa04567bf8f844de719ad32c12`
