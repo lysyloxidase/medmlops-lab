@@ -32,6 +32,7 @@ make setup
 make test
 make data
 make train
+make clinical
 ```
 
 The `make data` target runs:
@@ -46,11 +47,21 @@ The `make train` target runs:
 uv run dvc repro train
 ```
 
+The `make clinical` target runs:
+
+```bash
+uv run dvc repro calibrate conformalize evaluate
+```
+
 Raw data is written to `data/raw/diabetes130.parquet` and remains outside git.
 The validated Phase 1 artifact is written to `data/interim/validated.parquet`,
 with summary metrics in `reports/data_quality.json`. Phase 2 writes split
 feature tables to `data/processed/`, model artifacts to `models/`, and stable
 training metrics to `reports/train_metrics.json`.
+
+Phase 3 writes calibrated and conformal artifacts to `models/`, clinical metrics
+to `reports/clinical_metrics.json`, and reliability/decision-curve plots under
+`reports/figures/`.
 
 ## Phase 2 Training
 
@@ -65,6 +76,16 @@ the baseline, the baseline is registered as `models:/MedMLOps@champion`.
 The baseline prefers XGBoost. On macOS hosts without `libomp.dylib`, the local
 training code falls back to sklearn's histogram GBDT so the pipeline still
 reproduces; the Docker image installs the Linux OpenMP runtime for XGBoost.
+
+## Phase 3 Clinical Rigor
+
+The clinical layer fits isotonic, Platt, or temperature calibration on a held-out
+calibration split, then wraps the calibrated model in a MAPIE conformal
+abstention gate. Ambiguous or empty prediction sets abstain by default.
+
+Reports include ECE, Brier score, calibration slope/intercept, AUPRC,
+sensitivity/specificity/PPV/NPV at clinical thresholds, decision-curve net
+benefit, and conformal marginal coverage.
 
 ## Dataset
 
@@ -85,5 +106,6 @@ make data        # run DVC ingest, validation, preprocess, and split stages
 make reproduce   # reproduce every DVC stage
 make test        # run unit tests
 make train       # train baseline + hero and log MLflow provenance
+make clinical    # calibrate, conformalize, and evaluate clinical metrics
 make serve       # Phase 4 placeholder
 ```

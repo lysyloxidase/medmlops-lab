@@ -275,6 +275,7 @@ def train_phase2(
             "config": mlp_config,
             "n_features": x_train.shape[1],
             "feature_names": feature_names,
+            "transformer": transformer,
         },
         hero_path,
     )

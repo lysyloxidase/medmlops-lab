@@ -33,6 +33,9 @@ site/
 /reports/*
 !/reports/.gitkeep
 !/reports/*.json
+!/reports/figures/
+!/reports/figures/.gitkeep
+!/reports/figures/*.png
 /models/*
 !/models/.gitkeep
 /mlruns/

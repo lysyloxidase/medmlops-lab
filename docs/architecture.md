@@ -12,3 +12,5 @@ MedMLOps-Lab is organized as six production layers:
 Phase 1 implements the first layer and the contract boundary for the second.
 Phase 2 adds sklearn feature engineering, deterministic splits, an XGBoost
 baseline, a PyTorch tabular MLP hero model, and MLflow provenance tracking.
+Phase 3 adds probability calibration, MAPIE conformal abstention, and clinical
+utility metrics such as decision-curve net benefit.

@@ -69,3 +69,54 @@ stages:
     metrics:
       - reports/train_metrics.json:
           cache: false
+  calibrate:
+    cmd: python -m medmlops.cli calibrate
+    deps:
+      - src/medmlops/calibration/calibrate.py
+      - src/medmlops/models/tabular_mlp.py
+      - src/medmlops/models/tracking.py
+      - models/hero.pt
+      - data/processed/calib.parquet
+      - data/processed/val.parquet
+      - params.yaml
+    params:
+      - calibration
+    outs:
+      - models/calibrated.pkl
+    metrics:
+      - reports/calibration_metrics.json:
+          cache: false
+    plots:
+      - reports/figures/reliability.png
+  conformalize:
+    cmd: python -m medmlops.cli conformalize
+    deps:
+      - src/medmlops/conformal/conformal.py
+      - src/medmlops/calibration/calibrate.py
+      - src/medmlops/models/tracking.py
+      - models/calibrated.pkl
+      - data/processed/conformal.parquet
+      - data/processed/test.parquet
+      - params.yaml
+    params:
+      - conformal.alpha
+    outs:
+      - models/conformal.pkl
+    metrics:
+      - reports/conformal_metrics.json:
+          cache: false
+  evaluate:
+    cmd: python -m medmlops.cli evaluate
+    deps:
+      - src/medmlops/metrics/clinical.py
+      - src/medmlops/conformal/conformal.py
+      - src/medmlops/calibration/calibrate.py
+      - src/medmlops/models/tracking.py
+      - models/conformal.pkl
+      - data/processed/test.parquet
+      - params.yaml
+    metrics:
+      - reports/clinical_metrics.json:
+          cache: false
+    plots:
+      - reports/figures/decision_curve.png

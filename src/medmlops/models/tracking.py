@@ -59,6 +59,27 @@ def flatten_params(
     return flat
 
 
+def flatten_numeric_metrics(
+    payload: dict[str, Any] | list[Any],
+    prefix: str = "",
+) -> dict[str, float]:
+    """Flatten nested numeric metrics for MLflow."""
+
+    flat: dict[str, float] = {}
+    if isinstance(payload, dict):
+        iterator = payload.items()
+    else:
+        iterator = ((str(index), value) for index, value in enumerate(payload))
+
+    for key, value in iterator:
+        name = f"{prefix}_{key}" if prefix else str(key)
+        if isinstance(value, dict | list):
+            flat.update(flatten_numeric_metrics(value, name))
+        elif isinstance(value, bool | int | float):
+            flat[name] = float(value)
+    return flat
+
+
 def configure_mlflow(experiment_name: str) -> None:
     """Configure MLflow with an env-driven tracking URI."""
 

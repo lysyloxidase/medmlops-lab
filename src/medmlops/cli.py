@@ -194,6 +194,132 @@ def train(
 
 
 @app.command()
+def calibrate(
+    hero_path: Annotated[
+        Path,
+        typer.Option("--hero-path", help="Trained hero model artifact."),
+    ] = Path("models/hero.pt"),
+    calib_path: Annotated[
+        Path,
+        typer.Option("--calib-path", help="Calibration split parquet path."),
+    ] = Path("data/processed/calib.parquet"),
+    val_path: Annotated[
+        Path,
+        typer.Option("--val-path", help="Validation split parquet path."),
+    ] = Path("data/processed/val.parquet"),
+    model_path: Annotated[
+        Path,
+        typer.Option("--model-path", help="Calibrated model output path."),
+    ] = Path("models/calibrated.pkl"),
+    metrics_path: Annotated[
+        Path,
+        typer.Option("--metrics-path", help="Calibration metrics JSON path."),
+    ] = Path("reports/calibration_metrics.json"),
+    figure_path: Annotated[
+        Path,
+        typer.Option("--figure-path", help="Reliability diagram output path."),
+    ] = Path("reports/figures/reliability.png"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Fit probability calibration for the hero model."""
+
+    from medmlops.calibration.calibrate import calibrate_phase3
+
+    metrics = calibrate_phase3(
+        hero_path=hero_path,
+        calib_path=calib_path,
+        val_path=val_path,
+        model_path=model_path,
+        metrics_path=metrics_path,
+        figure_path=figure_path,
+        params_path=params_path,
+    )
+    console.print(f"Wrote calibration metrics: {metrics}")
+
+
+@app.command()
+def conformalize(
+    calibrated_path: Annotated[
+        Path,
+        typer.Option("--calibrated-path", help="Calibrated model artifact."),
+    ] = Path("models/calibrated.pkl"),
+    conformal_path: Annotated[
+        Path,
+        typer.Option("--conformal-path", help="Conformal split parquet path."),
+    ] = Path("data/processed/conformal.parquet"),
+    test_path: Annotated[
+        Path,
+        typer.Option("--test-path", help="Test split parquet path."),
+    ] = Path("data/processed/test.parquet"),
+    model_path: Annotated[
+        Path,
+        typer.Option("--model-path", help="Conformal gate output path."),
+    ] = Path("models/conformal.pkl"),
+    metrics_path: Annotated[
+        Path,
+        typer.Option("--metrics-path", help="Conformal metrics JSON path."),
+    ] = Path("reports/conformal_metrics.json"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Fit conformal prediction sets and the abstention gate."""
+
+    from medmlops.conformal.conformal import conformalize_phase3
+
+    metrics = conformalize_phase3(
+        calibrated_path=calibrated_path,
+        conformal_path=conformal_path,
+        test_path=test_path,
+        model_path=model_path,
+        metrics_path=metrics_path,
+        params_path=params_path,
+    )
+    console.print(f"Wrote conformal metrics: {metrics}")
+
+
+@app.command()
+def evaluate(
+    conformal_model_path: Annotated[
+        Path,
+        typer.Option("--conformal-model-path", help="Conformal gate artifact."),
+    ] = Path("models/conformal.pkl"),
+    test_path: Annotated[
+        Path,
+        typer.Option("--test-path", help="Test split parquet path."),
+    ] = Path("data/processed/test.parquet"),
+    metrics_path: Annotated[
+        Path,
+        typer.Option("--metrics-path", help="Clinical metrics JSON path."),
+    ] = Path("reports/clinical_metrics.json"),
+    figure_path: Annotated[
+        Path,
+        typer.Option("--figure-path", help="Decision curve output path."),
+    ] = Path("reports/figures/decision_curve.png"),
+    params_path: Annotated[
+        Path,
+        typer.Option("--params", help="DVC params YAML path."),
+    ] = Path("params.yaml"),
+) -> None:
+    """Evaluate calibrated/conformal predictions with clinical metrics."""
+
+    from medmlops.metrics.clinical import evaluate_phase3
+
+    metrics = evaluate_phase3(
+        conformal_model_path=conformal_model_path,
+        test_path=test_path,
+        metrics_path=metrics_path,
+        figure_path=figure_path,
+        params_path=params_path,
+    )
+    console.print(f"Wrote clinical metrics: {metrics}")
+
+
+@app.command()
 def version() -> None:
     """Print package version."""
 

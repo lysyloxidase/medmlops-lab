@@ -1,0 +1,83 @@
+{
+  "auprc": 0.2195125318,
+  "auroc": 0.6807271685,
+  "brier": 0.094046543,
+  "calibration_intercept": -0.0371014336,
+  "calibration_slope": 0.9811621365,
+  "conformal": {
+    "abstention_rate": 0.0411221382,
+    "alpha": 0.1,
+    "ambiguous_set_rate": 0.0411221382,
+    "empty_set_rate": 0.0,
+    "marginal_coverage": 0.9027709541
+  },
+  "decision_curve": {
+    "model": [
+      0.0666466697,
+      0.0344513227,
+      0.0174297291,
+      0.0095681439,
+      0.0027934137
+    ],
+    "threshold": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.3
+    ],
+    "treat_all": [
+      0.0648159162,
+      0.0128612449,
+      -0.0452057407,
+      -0.1105310995,
+      -0.2691783995
+    ],
+    "treat_none": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "ece": 0.0038682659,
+  "source_test_sha256": "733b912434c9be8ba446d30b8ef1efeb6f20449dee0bd69e61c01c10c03860f2",
+  "threshold_metrics": {
+    "0.05": {
+      "npv": 0.9585755814,
+      "ppv": 0.1294219154,
+      "sensitivity": 0.9247027741,
+      "specificity": 0.2188243101,
+      "threshold": 0.05
+    },
+    "0.1": {
+      "npv": 0.9364684186,
+      "ppv": 0.1663687033,
+      "sensitivity": 0.6966094232,
+      "specificity": 0.5616324725,
+      "threshold": 0.1
+    },
+    "0.15": {
+      "npv": 0.9191500223,
+      "ppv": 0.2143924835,
+      "sensitivity": 0.442095993,
+      "specificity": 0.7965492451,
+      "threshold": 0.15
+    },
+    "0.2": {
+      "npv": 0.9044490733,
+      "ppv": 0.2955242183,
+      "sensitivity": 0.2122413034,
+      "specificity": 0.9364596582,
+      "threshold": 0.2
+    },
+    "0.3": {
+      "npv": 0.894235589,
+      "ppv": 0.3985148515,
+      "sensitivity": 0.0708938793,
+      "specificity": 0.9865619643,
+      "threshold": 0.3
+    }
+  }
+}

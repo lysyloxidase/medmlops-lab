@@ -1,4 +1,4 @@
-.PHONY: setup data train serve reproduce test lint format clean
+.PHONY: setup data train clinical serve reproduce test lint format clean
 
 setup:
 	uv sync --all-groups
@@ -13,6 +13,9 @@ data:
 
 train:
 	uv run dvc repro train
+
+clinical:
+	uv run dvc repro calibrate conformalize evaluate
 
 serve:
 	@echo "Serving is introduced in Phase 4."

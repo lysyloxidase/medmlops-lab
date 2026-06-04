@@ -9,6 +9,8 @@ The project treats reproducibility as a user-facing feature. Phase 1 uses:
 - a centralized seed function in `src/medmlops/seeds.py`
 - deterministic sklearn splits and single-threaded CPU model training
 - stable `reports/train_metrics.json` output with no timestamps or run IDs
+- held-out calibration and conformal splits defined by `params.yaml`
+- DVC-tracked reliability and decision-curve figures
 
 The honest guarantee is scoped: bit-reproducible runs are expected only inside a
 pinned Docker image on the same CPU architecture.

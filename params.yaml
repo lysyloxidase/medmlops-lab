@@ -93,3 +93,17 @@ model:
 tracking:
   register_model: true
   docker_base_image: python:3.12-slim
+calibration:
+  method: isotonic
+  max_ece: 0.03
+  n_bins: 10
+conformal:
+  alpha: 0.1
+  abstain_on_ambiguous: true
+evaluation:
+  clinical_thresholds:
+    - 0.05
+    - 0.1
+    - 0.15
+    - 0.2
+    - 0.3

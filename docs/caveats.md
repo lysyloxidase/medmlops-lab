@@ -1,6 +1,6 @@
 # Caveats
 
-Phase 1 caveats:
+Project caveats:
 
 1. This is a portfolio demo, not a medical device.
 2. The default dataset is historical and not representative of all care
@@ -16,6 +16,11 @@ Phase 1 caveats:
 11. External dependency releases can change behavior.
 12. Local MinIO is a development stand-in for managed object storage.
 13. Validation contracts are necessary but not sufficient for clinical safety.
-14. Future monitoring requires production-like data.
-15. Any real-world use would require independent clinical, legal, security, and
+14. Conformal prediction coverage is marginal, not conditional: it holds on
+    average under exchangeability assumptions, not necessarily for every
+    subgroup, and can break under drift.
+15. Net benefit depends on the chosen clinical threshold probabilities and does
+    not establish clinical utility by itself.
+16. Future monitoring requires production-like data.
+17. Any real-world use would require independent clinical, legal, security, and
     regulatory review.

@@ -1,0 +1,34 @@
+{
+  "calibration": {
+    "calibrated": {
+      "brier": 0.094000463,
+      "calibration_intercept": 0.0024167782,
+      "calibration_slope": 1.0013112111,
+      "ece": 1.61e-08
+    },
+    "raw": {
+      "brier": 0.2120061869,
+      "calibration_intercept": -1.976288685,
+      "calibration_slope": 0.8371985066,
+      "ece": 0.3211139437
+    }
+  },
+  "max_ece": 0.03,
+  "method": "isotonic",
+  "passes_max_ece": true,
+  "source_calib_sha256": "a71c94036569cc7ce71a866effe3f8d7e48a24c07d6eed88d53cc32ae0c4f2c9",
+  "validation": {
+    "calibrated": {
+      "brier": 0.0943601795,
+      "calibration_intercept": -0.1868754932,
+      "calibration_slope": 0.9071066073,
+      "ece": 0.0086328384
+    },
+    "raw": {
+      "brier": 0.2135219727,
+      "calibration_intercept": -1.9779888857,
+      "calibration_slope": 0.7872900555,
+      "ece": 0.3214680152
+    }
+  }
+}

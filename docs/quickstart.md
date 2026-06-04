@@ -9,6 +9,7 @@ make setup
 make test
 make data
 make train
+make clinical
 ```
 
 `make data` runs the DVC stages:
@@ -32,3 +33,10 @@ Outputs:
 - `models/hero.pt`
 - `models/baseline.pkl`
 - `reports/train_metrics.json`
+- `models/calibrated.pkl`
+- `models/conformal.pkl`
+- `reports/calibration_metrics.json`
+- `reports/conformal_metrics.json`
+- `reports/clinical_metrics.json`
+- `reports/figures/reliability.png`
+- `reports/figures/decision_curve.png`

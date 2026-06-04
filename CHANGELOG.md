@@ -16,3 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 2 sklearn feature engineering, deterministic splits, XGBoost-preferred
   GBDT baseline, PyTorch tabular MLP hero model, MLflow provenance tracking,
   model registry aliasing, and training metrics.
+- Phase 3 isotonic/Platt/temperature calibration, reliability diagrams, MAPIE
+  conformal abstention, and clinical metrics including decision-curve net
+  benefit.

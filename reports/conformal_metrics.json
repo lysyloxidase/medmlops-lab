@@ -1,0 +1,13 @@
+{
+  "abstention_rate": 0.0411221382,
+  "alpha": 0.1,
+  "ambiguous_set_rate": 0.0411221382,
+  "coverage_within_tolerance": true,
+  "empty_set_rate": 0.0,
+  "mapie_classifier_fit": true,
+  "mapie_fit_error": null,
+  "marginal_coverage": 0.9027709541,
+  "quantile": 0.7313432836,
+  "source_conformal_sha256": "a8faf91e8e2038054612773921006327c9a5f09e0fec20e185d270ec5184ffda",
+  "target_coverage": 0.9
+}
